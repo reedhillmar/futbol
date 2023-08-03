@@ -49,8 +49,14 @@ describe League do
   end
 
   describe "#highest_scoring_home_team" do
-  it "can return the team with the highest average goals per game while home across all seasons" do
-    expect(@league1.highest_scoring_home_team).to eq("New England Revolution")
+    it "can return the team with the highest average goals per game while home across all seasons" do
+      expect(@league1.highest_scoring_home_team).to eq("New England Revolution")
+    end
   end
-end
+
+  describe "#lowest_scoring_visitor" do
+    it "can return the team with the lowest average goals per game while away across all seasons" do
+      expect(@league1.lowest_scoring_visitor).to eq("Atlanta United")
+    end
+  end
 end
