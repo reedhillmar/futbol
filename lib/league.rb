@@ -13,4 +13,8 @@ class League
   def add_team(team)
     @teams << team
   end
+
+  def count_of_teams
+    @teams.count
+  end
 end
