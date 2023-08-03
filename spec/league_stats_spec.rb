@@ -41,4 +41,9 @@ describe League do
       expect(@league1.worst_offense).to eq("Washington Spirit FC")
     end
   end
+
+  describe "#highest_scoring_visitor" double
+    it "can return the team with the highest average goals per game while away across all seasons" do
+      expect(@league1.highest_scoring_visitor).to eq("Atlanta United")
+    end
 end
