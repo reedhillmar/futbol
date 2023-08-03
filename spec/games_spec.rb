@@ -1,5 +1,4 @@
 require 'spec_helper'
-require './lib/games'
 
 describe Games do 
   before(:each) do 
