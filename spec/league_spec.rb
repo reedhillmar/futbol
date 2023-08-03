@@ -31,4 +31,13 @@ describe League do
       expect(@league1.count_of_teams).to be 2
     end
   end
+
+  describe "#best_offense" do
+    it "can return the team with the highest average goals per game across all seasons" do
+      @league1.add_team(@team1)
+      @league2.add_team(@team2)
+
+      expect(@league1.best_offense).to eq(@team2.team_name)
+    end
+  end
 end
