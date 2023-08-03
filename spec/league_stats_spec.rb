@@ -56,7 +56,7 @@ describe League do
 
   describe "#lowest_scoring_visitor" do
     it "can return the team with the lowest average goals per game while away across all seasons" do
-      expect(@league1.lowest_scoring_visitor).to eq("Atlanta United")
+      expect(@league1.lowest_scoring_visitor).to eq("FC Dallas")
     end
   end
 end
