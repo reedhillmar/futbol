@@ -43,16 +43,25 @@ class League
         h[id] = nil
       end
     end
-    best_id = h.max_by do |_, value|
+    best_value = h.max_by do |_, value|
       if value != nil
         value
       else
         0
       end
-    end[0]
-    @teams.teams.find do |team|
-      team.team_id == best_id
-    end.team_name
+    end[1]
+    best_ids = h.flat_map do |id, value|
+      if value == best_value
+        id
+      else
+        []
+      end
+    end
+    @teams.teams.find_all do |team|
+      best_ids.include?(team.team_id)
+    end.map do |team|
+      team.team_name
+    end.join(", ")
   end
 
   def worst_offense
@@ -73,16 +82,25 @@ class League
         h[id] = nil
       end
     end
-    worst_id = h.min_by do |_, value|
+    worst_value = h.min_by do |_, value|
       if value != nil
         value
       else
         100
       end
-    end[0]
-    @teams.teams.find do |team|
-      team.team_id == worst_id
-    end.team_name
+    end[1]
+    worst_ids = h.flat_map do |id, value|
+      if value == worst_value
+        id
+      else
+        []
+      end
+    end
+    @teams.teams.find_all do |team|
+      worst_ids.include?(team.team_id)
+    end.map do |team|
+      team.team_name
+    end.join(", ")
   end
 
   def highest_scoring_visitor
@@ -103,16 +121,25 @@ class League
         h[id] = nil
       end
     end
-    best_id = h.max_by do |_, value|
+    best_value = h.max_by do |_, value|
       if value != nil
         value
       else
         0
       end
-    end[0]
-    @teams.teams.find do |team|
-      team.team_id == best_id
-    end.team_name
+    end[1]
+    best_ids = h.flat_map do |id, value|
+      if value == best_value
+        id
+      else
+        []
+      end
+    end
+    @teams.teams.find_all do |team|
+      best_ids.include?(team.team_id)
+    end.map do |team|
+      team.team_name
+    end.join(", ")
   end
 
   def highest_scoring_home_team
@@ -133,16 +160,25 @@ class League
         h[id] = nil
       end
     end
-    best_id = h.max_by do |key, value|
+    best_value = h.max_by do |_, value|
       if value != nil
         value
       else
         0
       end
-    end[0]
-    @teams.teams.find do |team|
-      team.team_id == best_id
-    end.team_name
+    end[1]
+    best_ids = h.flat_map do |id, value|
+      if value == best_value
+        id
+      else
+        []
+      end
+    end
+    @teams.teams.find_all do |team|
+      best_ids.include?(team.team_id)
+    end.map do |team|
+      team.team_name
+    end.join(", ")
   end
 
   def lowest_scoring_visitor
