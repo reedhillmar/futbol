@@ -1,15 +1,13 @@
 require 'spec_helper'
-require './lib/game_stats'
 
-describe Team do 
-  #will need to rename this class
+describe Games do 
   before(:each) do 
-    @game1 = Game.new(2012030221, 20122013, "Postseason", "5/16/13", 3, 6, 2, 3, "Toyota Stadium")
+    @game1 = Games.new(2012030221, 20122013, "Postseason", "5/16/13", 3, 6, 2, 3, "Toyota Stadium")
   end
 
   describe '#initialize' do 
     it 'exists with attributes' do 
-      expect(@game1).to be_a(Game)
+      expect(@game1).to be_a(Games)
       expect(@game1.game_id).to eq(2012030221)
       expect(@game1.season).to eq(20122013)
       expect(@game1.type).to eq("Postseason")
