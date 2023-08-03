@@ -22,4 +22,13 @@ describe League do
       expect(@league1.teams).to eq([@team1, @team2])
     end
   end
+
+  describe "#count_of_teams" do
+    it "can return the number of teams" do
+      @league1.add_team(@team1)
+      @league1.add_team(@team2)
+
+      expect(@league1.count_of_teams).to be 2
+    end
+  end
 end
