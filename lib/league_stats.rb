@@ -21,10 +21,6 @@ class League
     @game_teams.create_game_teams(game_teams_database)
   end
 
-  # def add_team(team)
-  #   @teams << team
-  # end
-
   def count_of_teams
     @teams.teams.count
   end
@@ -34,14 +30,11 @@ class League
 
     # find team_id for each team
     team_ids = @teams.teams.map {|team| team.team_id}
-    # game_teams_array = GameTeamsFactory.new
-    # game_teams_array.create_game_teams("./fixture/game_teams_fixtures.csv")
 
     # for each game_team, find all games with matching team_id
       # for each set of games, map goals
       # use average to return goals/game across all seasons
     # find team_id with highest gpg
-    
     h = team_ids.each_with_object({}) do |id, h|
       team_games = @game_teams.game_teams.find_all {|game| game.team_id == id}
       if !team_games.empty?
@@ -67,14 +60,11 @@ class League
 
     # find team_id for each team
     team_ids = @teams.teams.map {|team| team.team_id}
-    # game_teams_array = GameTeamsFactory.new
-    # game_teams_array.create_game_teams("./fixture/game_teams_fixtures.csv")
 
     # for each game_team, find all games with matching team_id
       # for each set of games, map goals
       # use average to return goals/game across all seasons
     # find team_id with lowest gpg
-    
     h = team_ids.each_with_object({}) do |id, h|
       team_games = @game_teams.game_teams.find_all {|game| game.team_id == id}
       if !team_games.empty?
@@ -100,14 +90,11 @@ class League
 
     # find team_id for each team
     team_ids = @teams.teams.map {|team| team.team_id}
-    # game_teams_array = GameTeamsFactory.new
-    # game_teams_array.create_game_teams("./fixture/game_teams_fixtures.csv")
 
     # for each game_team, find all away games with matching team_id
       # for each set of games, map goals
       # use average to return goals/game across all seasons
     # find team_id with highest gpg
-    
     h = team_ids.each_with_object({}) do |id, h|
       away_games = @game_teams.game_teams.find_all {|game| game.team_id == id && game.hoa == "away"}
       if !away_games.empty?
@@ -133,14 +120,11 @@ class League
 
     # find team_id for each team
     team_ids = @teams.teams.map {|team| team.team_id}
-    # game_teams_array = GameTeamsFactory.new
-    # game_teams_array.create_game_teams("./fixture/game_teams_fixtures.csv")
 
     # for each game_team, find all home games with matching team_id
       # for each set of games, map goals
       # use average to return goals/game across all seasons
     # find team_id with highest gpg
-    
     h = team_ids.each_with_object({}) do |id, h|
       home_games = @game_teams.game_teams.find_all {|game| game.team_id == id && game.hoa == "home"}
       if !home_games.empty?
@@ -166,14 +150,11 @@ class League
 
     # find team_id for each team
     team_ids = @teams.teams.map {|team| team.team_id}
-    # game_teams_array = GameTeamsFactory.new
-    # game_teams_array.create_game_teams("./fixture/game_teams_fixtures.csv")
 
     # for each game_team, find all away games with matching team_id
       # for each set of games, map goals
       # use average to return goals/game across all seasons
     # find team_id with lowest gpg
-    
     h = team_ids.each_with_object({}) do |id, h|
       away_games = @game_teams.game_teams.find_all {|game| game.team_id == id && game.hoa == "away"}
       if !away_games.empty?
@@ -182,16 +163,25 @@ class League
         h[id] = nil
       end
     end
-    worst_id = h.min_by do |_, value|
+    worst_value = h.min_by do |_, value|
       if value != nil
         value
       else
         100
       end
-    end[0]
-    @teams.teams.find do |team|
-      team.team_id == worst_id
-    end.team_name
+    end[1]
+    worst_ids = h.flat_map do |id, value|
+      if value == worst_value
+        id
+      else
+        []
+      end
+    end
+    @teams.teams.find_all do |team|
+      worst_ids.include?(team.team_id)
+    end.map do |team|
+      team.team_name
+    end.join(", ")
   end
 
   def lowest_scoring_home_team
@@ -199,14 +189,11 @@ class League
 
     # find team_id for each team
     team_ids = @teams.teams.map {|team| team.team_id}
-    # game_teams_array = GameTeamsFactory.new
-    # game_teams_array.create_game_teams("./fixture/game_teams_fixtures.csv")
 
     # for each game_team, find all home games with matching team_id
       # for each set of games, map goals
       # use average to return goals/game across all seasons
     # find team_id with lowest gpg
-    
     h = team_ids.each_with_object({}) do |id, h|
       home_games = @game_teams.game_teams.find_all {|game| game.team_id == id && game.hoa == "home"}
       if !home_games.empty?
@@ -215,15 +202,24 @@ class League
         h[id] = nil
       end
     end
-    worst_id = h.min_by do |_, value|
+    worst_value = h.min_by do |_, value|
       if value != nil
         value
       else
         100
       end
-    end[0]
-    @teams.teams.find do |team|
-      team.team_id == worst_id
-    end.team_name
+    end[1]
+    worst_ids = h.flat_map do |id, value|
+      if value == worst_value
+        id
+      else
+        []
+      end
+    end
+    @teams.teams.find_all do |team|
+      worst_ids.include?(team.team_id)
+    end.map do |team|
+      team.team_name
+    end.join(", ")
   end
 end
