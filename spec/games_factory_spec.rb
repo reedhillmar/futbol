@@ -14,7 +14,7 @@ describe GamesFactory do
   describe '#create_games' do
     it 'can add games' do
       expect(@games.create_games("./data/games.csv")).to be_an Array
-      expect(@games.create_games("./data/games.csv")).to all be_a Game
+      expect(@games.create_games("./data/games.csv")).to all be_a Games
 
       @games.create_games("./data/games.csv")
 
