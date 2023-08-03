@@ -38,7 +38,7 @@ describe League do
 
   describe "#worst_offense" do
     it "can return the team with the lowest average goals per game across all seasons" do
-      expect(@league1.worst_offensest_offense).to eq("Washington Spirit FC")
+      expect(@league1.worst_offense).to eq("Washington Spirit FC")
     end
   end
 end

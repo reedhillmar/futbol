@@ -50,7 +50,6 @@ class League
         h[id] = nil
       end
     end
-    require 'pry';binding.pry
     best_id = h.max_by do |_, value|
       if value != nil
         value
@@ -60,6 +59,39 @@ class League
     end[0]
     @teams.teams.find do |team|
       team.team_id == best_id
+    end.team_name
+  end
+
+  def worst_offense
+    # Name of the team with the lowest average number of goals scored per game across all seasons
+
+    # find team_id for each team
+    team_ids = @teams.teams.map {|team| team.team_id}
+    # game_teams_array = GameTeamsFactory.new
+    # game_teams_array.create_game_teams("./fixture/game_teams_fixtures.csv")
+
+    # for each game_team, find all games with matching team_id
+      # for each set of games, map goals
+      # use average to return goals/game across all seasons
+    # find team_id with lowest gpg
+    
+    h = team_ids.each_with_object({}) do |id, h|
+      team_games = @game_teams.game_teams.find_all {|game| game.team_id == id}
+      if !team_games.empty?
+        h[id] = average(team_games.map {|game| game.goals})
+      else
+        h[id] = nil
+      end
+    end
+    worst_id = h.min_by do |_, value|
+      if value != nil
+        value
+      else
+        100
+      end
+    end[0]
+    @teams.teams.find do |team|
+      team.team_id == worst_id
     end.team_name
   end
 end
