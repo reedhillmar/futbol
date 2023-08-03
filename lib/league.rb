@@ -9,4 +9,8 @@ class League
   def initialize
     @teams = []
   end
+
+  def add_team(team)
+    @teams << team
+  end
 end
