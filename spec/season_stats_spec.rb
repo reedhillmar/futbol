@@ -42,12 +42,18 @@ RSpec.describe Season do
   end
 
   describe '#most_accurate_team' do
-    xit "can return which team had the highest shot to goal percentage in a season" do
+    it "can return which team had the highest shot to goal percentage in a season" do
       searched_season = Season.new(20122013)
-      expect(searched_season.most_accurate_team).to eq('Chivas')
+      expect(searched_season.most_accurate_team).to eq('Atlanta United')
     end
   end
 
+  describe '#worst_coach' do
+    it "can return the coach with the worst win loss percentage" do
+    searched_season = Season.new(20122013)
+    expect(searched_season.worst_coach).to eq('John Tortorella')
+    end
+  end
 
 
 end
