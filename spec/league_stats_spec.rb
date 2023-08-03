@@ -59,4 +59,10 @@ describe League do
       expect(@league1.lowest_scoring_visitor).to eq("FC Dallas")
     end
   end
+
+  describe "#lowest_scoring_home_team" do
+    it "can return the team with the lowest average goals per game while home across all seasons" do
+      expect(@league1.lowest_scoring_home_team).to eq("Washington Spirit FC")
+    end
+  end
 end
