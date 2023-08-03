@@ -103,7 +103,7 @@ class League
     # game_teams_array = GameTeamsFactory.new
     # game_teams_array.create_game_teams("./fixture/game_teams_fixtures.csv")
 
-    # for each game_team, find all games with matching team_id
+    # for each game_team, find all away games with matching team_id
       # for each set of games, map goals
       # use average to return goals/game across all seasons
     # find team_id with highest gpg
@@ -117,6 +117,39 @@ class League
       end
     end
     best_id = h.max_by do |_, value|
+      if value != nil
+        value
+      else
+        0
+      end
+    end[0]
+    @teams.teams.find do |team|
+      team.team_id == best_id
+    end.team_name
+  end
+
+  def highest_scoring_home_team
+    # Name of the team with the highest average score per game across all seasons when they are away.
+
+    # find team_id for each team
+    team_ids = @teams.teams.map {|team| team.team_id}
+    # game_teams_array = GameTeamsFactory.new
+    # game_teams_array.create_game_teams("./fixture/game_teams_fixtures.csv")
+
+    # for each game_team, find all home games with matching team_id
+      # for each set of games, map goals
+      # use average to return goals/game across all seasons
+    # find team_id with highest gpg
+    
+    h = team_ids.each_with_object({}) do |id, h|
+      home_games = @game_teams.game_teams.find_all {|game| game.team_id == id && game.hoa == "home"}
+      if !home_games.empty?
+        h[id] = average(home_games.map {|game| game.goals})
+      else
+        h[id] = nil
+      end
+    end
+    best_id = h.max_by do |key, value|
       if value != nil
         value
       else
