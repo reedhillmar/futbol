@@ -45,6 +45,39 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
 
   #Best ratio of shots to goals
   def most_accurate_team
+    @goals = Hash.new(0)
+    @shots = Hash.new(0)
+    @find_game_ids = []
+    @searched_season.each do |game|
+      @find_game_ids << game.game_id
+    end
+    
+    @all_games = @game_teams.game_teams.select do |game_team|
+      @find_game_ids.each do |game|
+        game_team.team_id == game
+      end
+    end
+    @all_games.each do |game|
+      @goals[game.team_id] += game.goals
+      @shots[game.team_id] += game.shots
+    end
+
+    @shot_accuracy = Hash.new(0)
+
+    @goals.each do |team_id,goals|
+      shots = @shots[team_id]
+      @shot_accuracy[team_id] = percentage(goals, shots)
+    end
+
+
+    
+    @best_accuracy = @shot_accuracy.max_by do |team_id, percentage|
+      percentage
+    end
+  
+    @best_accuracy_team_name = @teams.teams.find do |team|
+      team.team_id == @best_accuracy[0]
+    end.team_name
 
   end
 
