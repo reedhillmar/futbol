@@ -50,8 +50,8 @@ class League
         h[id] = nil
       end
     end
+    require 'pry';binding.pry
     best_id = h.max_by do |_, value|
-      # require 'pry';binding.pry
       if value != nil
         value
       else
