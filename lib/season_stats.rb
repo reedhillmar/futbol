@@ -38,6 +38,36 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
   end
 
   def winningest_coach
+    @game_results = Hash.new {|hash, key| hash[key] = []}
+    @find_game_ids = []
+    @searched_season.each do |game|
+      @find_game_ids << game.game_id
+    end
+    
+    @all_games = @game_teams.game_teams.select do |game_team|
+      @find_game_ids.each do |game|
+        game_team.team_id == game
+      end
+    end
+    
+    @all_games.each do |game|
+      @game_results[game.team_id] << game.result
+    end
+
+    @team_win_percentages = Hash.new(0)
+    @game_results.each do |team_id, game|
+      wins = game.count("WIN")
+      total_games = game.count
+      @team_win_percentages[team_id] = percentage(wins, total_games)
+    end
+
+    @best_team = @team_win_percentages.max_by do |team_id, percentage|
+      percentage
+    end
+  
+    @best_team_team_name = @game_teams.game_teams.find do |team|
+      team.team_id == @best_team[0]
+    end.head_coach
   end
 
   def worst_coach

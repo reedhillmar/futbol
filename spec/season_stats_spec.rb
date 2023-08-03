@@ -58,7 +58,7 @@ RSpec.describe Season do
   describe '#winningest_coach' do
     it "can return the coach with the best win loss percentage" do
     searched_season = Season.new(20122013)
-    expect(searched_season.worst_coach).to eq('Kieran')
+    expect(searched_season.winningest_coach).to eq('John Hynes')
     end
   end
   
