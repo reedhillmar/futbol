@@ -83,28 +83,42 @@ describe League do
   end
 
   describe "#best_value" do
-    it "return the max value of a hash" do
+    it "can return the max value of a hash" do
       expect(@league1.best_value(@league1.average_goals("total"))).to be 4.0
     end
   end
 
   describe "#worst_value" do
-    it "return the min value of a hash" do
+    it "can return the min value of a hash" do
       expect(@league1.worst_value(@league1.average_goals("total"))).to be 0.0
     end
   end
 
   describe "#best_ids" do
-    it "return an array of team ids that have the max value of a hash" do
+    it "can return an array of team ids that have the max value of a hash" do
       expect(@league1.best_ids(@league1.average_goals("total"))).to be_an Array
       expect(@league1.best_ids(@league1.average_goals("total"))[0]).to be 1
     end
   end
 
   describe "#worst_ids" do
-    it "return an array of team ids that have the min value of a hash" do
+    it "can return an array of team ids that have the min value of a hash" do
       expect(@league1.worst_ids(@league1.average_goals("total"))).to be_an Array
       expect(@league1.worst_ids(@league1.average_goals("total"))[0]).to be 22
+    end
+  end
+
+  describe "#best_teams" do
+    it "can return a string of the best teams according to a given criteria" do
+      expect(@league1.best_teams(@league1.average_goals("total"))).to be_a String
+      expect(@league1.best_teams(@league1.average_goals("total"))).to eq("teams")
+    end
+  end
+
+  describe "#worst_teams" do
+    it "can return a string of the worst teams according to a given criteria" do
+      expect(@league1.worst_teams(@league1.average_goals("total"))).to be_a String
+      expect(@league1.worst_teams(@league1.average_goals("total"))).to eq("teams")
     end
   end
 end
