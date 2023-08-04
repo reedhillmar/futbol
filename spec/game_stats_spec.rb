@@ -50,4 +50,9 @@ describe GameStats do
     end
   end
 
+  describe '#count_of_games_by_season' do 
+    it 'returns a hash of number of games by season' do 
+      expect(@game1.count_of_games_by_season).to eq()
+    end
+  end
 end
