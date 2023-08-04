@@ -11,7 +11,7 @@ describe League do
       expect(@league1.teams).to be_a TeamsFactory
       expect(@league1.game_teams).to be_a GameTeamsFactory
       expect(@league1.team_ids).to be_an Array
-      expect(@league1.team_ids.empty?).to be true
+      expect(@league1.team_ids.empty?).to be false
     end
   end
 
