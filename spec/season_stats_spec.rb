@@ -60,13 +60,16 @@ RSpec.describe Season do
       expect(@season.most_accurate_team).to eq('Houston Dynamo')
     end
     it "can work for different seasons" do
-      expect(@alt_season.least_accurate_team).to eq('Vancouver Whitecaps FC')
+      expect(@alt_season.most_accurate_team).to eq('Chicago Red Stars')
     end
   end
 
   describe '#worst_coach' do
     it "can return the coach with the worst win loss percentage" do
     expect(@season.worst_coach).to eq('John Tortorella')
+    end
+    it "can work for different seasons" do
+      expect(@alt_season.worst_coach).to eq('Joe Sacco')
     end
   end
 
