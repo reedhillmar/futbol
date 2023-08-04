@@ -23,33 +23,27 @@ class League
   end
 
   def best_offense
-    h = average_goals("total")
-    best_teams(h)
+    best_teams(average_goals("total"))
   end
 
   def worst_offense
-    h = average_goals("total")
-    worst_teams(h)
+    worst_teams(average_goals("total"))
   end
 
   def highest_scoring_visitor
-    h = average_goals("away")
-    best_teams(h)
+    best_teams(average_goals("away"))
   end
 
   def highest_scoring_home_team
-    h = average_goals("home")
-    best_teams(h)
+    best_teams(average_goals("home"))
   end
 
   def lowest_scoring_visitor
-    h = average_goals("away")
-    worst_teams(h)
+    worst_teams(average_goals("away"))
   end
 
   def lowest_scoring_home_team
-    h = average_goals("home")
-    worst_teams(h)
+    worst_teams(average_goals("home"))
   end
 
   def find_team_ids
