@@ -10,7 +10,6 @@ class Season
   include Calculable
 attr_reader :year, :teams, :games, :game_teams, :searched_season
   def initialize(year,teams_database, games_database, game_teams_database)
-    #Add database arguments later
     @year = year
     @teams = TeamsFactory.new
     @teams.create_teams(teams_database)
@@ -18,9 +17,9 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     @games.create_games(games_database)
     @game_teams = GameTeamsFactory.new
     @game_teams.create_game_teams(game_teams_database)
-    @game_teams
     @searched_season = []
     within_searched_season
+    
   end
 
   def within_searched_season
@@ -36,11 +35,8 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     @searched_season.each do |game|
       @find_game_ids << game.game_id
     end
-    
-    @all_games = @game_teams.game_teams.select do |game_team|
-      @find_game_ids.each do |game|
-        game_team.team_id == game
-      end
+    @all_games = @game_teams.game_teams.find_all do |game_team|
+      @find_game_ids.include?(game_team.game_id)
     end
   end
 
