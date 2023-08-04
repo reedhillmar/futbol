@@ -24,56 +24,32 @@ class League
 
   def best_offense
     h = average_goals("total")
-    @teams.teams.find_all do |team|
-      best_ids(h).include?(team.team_id)
-    end.map do |team|
-      team.team_name
-    end.join(", ")
+    best_teams(h)
   end
 
   def worst_offense
     h = average_goals("total")
-    @teams.teams.find_all do |team|
-      worst_ids(h).include?(team.team_id)
-    end.map do |team|
-      team.team_name
-    end.join(", ")
+    worst_teams(h)
   end
 
   def highest_scoring_visitor
     h = average_goals("away")
-    @teams.teams.find_all do |team|
-      best_ids(h).include?(team.team_id)
-    end.map do |team|
-      team.team_name
-    end.join(", ")
+    best_teams(h)
   end
 
   def highest_scoring_home_team
     h = average_goals("home")
-    @teams.teams.find_all do |team|
-      best_ids(h).include?(team.team_id)
-    end.map do |team|
-      team.team_name
-    end.join(", ")
+    best_teams(h)
   end
 
   def lowest_scoring_visitor
     h = average_goals("away")
-    @teams.teams.find_all do |team|
-      worst_ids(h).include?(team.team_id)
-    end.map do |team|
-      team.team_name
-    end.join(", ")
+    worst_teams(h)
   end
 
   def lowest_scoring_home_team
     h = average_goals("home")
-    @teams.teams.find_all do |team|
-      worst_ids(h).include?(team.team_id)
-    end.map do |team|
-      team.team_name
-    end.join(", ")
+    worst_teams(h)
   end
 
   def find_team_ids
