@@ -1,5 +1,3 @@
-require './lib/stat_tracker.rb'
-
 RSpec.describe StatTracker do
   describe "#initialize" do
     it "can initialize StatTracker" do
