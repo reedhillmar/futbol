@@ -1,4 +1,3 @@
-#./lib/season.rb
 require 'csv'
 require 'spec_helper'
 require_relative 'game_teams_factory'
@@ -9,24 +8,18 @@ require_relative 'calculable'
 
 class Season
   include Calculable
-  
-
-  # season, game_id      'games_fixtures'
-  # game_id, team_id, tackles   'games_teams_fixtures'
-  # team_id, franchiseId 'teams.csv'
 attr_reader :year, :teams, :games, :game_teams, :searched_season
-  def initialize(year)
-    #Add database arguments later
+  def initialize(year,teams_database, games_database, game_teams_database)
     @year = year
     @teams = TeamsFactory.new
-    @teams.create_teams('./data/teams.csv')
+    @teams.create_teams(teams_database)
     @games = GamesFactory.new
-    @games.create_games('./fixture/games_fixtures.csv')
+    @games.create_games(games_database)
     @game_teams = GameTeamsFactory.new
-    @game_teams.create_game_teams('./fixture/game_teams_fixtures.csv')
-    @game_teams
+    @game_teams.create_game_teams(game_teams_database)
     @searched_season = []
     within_searched_season
+    
   end
 
   def within_searched_season
@@ -37,86 +30,36 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     end
   end
 
-  def winningest_coach
-    @game_results = Hash.new {|hash, key| hash[key] = []}
+  def method_setup
     @find_game_ids = []
     @searched_season.each do |game|
       @find_game_ids << game.game_id
     end
-    
-    @all_games = @game_teams.game_teams.select do |game_team|
-      @find_game_ids.each do |game|
-        game_team.team_id == game
-      end
+    @all_games = @game_teams.game_teams.find_all do |game_team|
+      @find_game_ids.include?(game_team.game_id)
     end
+  end
+
+  def accumulating_game_results
+    @game_results = Hash.new {|hash, key| hash[key] = []}
     
     @all_games.each do |game|
       @game_results[game.team_id] << game.result
     end
 
     @team_win_percentages = Hash.new(0)
+
     @game_results.each do |team_id, game|
       wins = game.count("WIN")
       total_games = game.count
       @team_win_percentages[team_id] = percentage(wins, total_games)
     end
-
-    @best_team = @team_win_percentages.max_by do |team_id, percentage|
-      percentage
-    end
-  
-    @best_team_team_name = @game_teams.game_teams.find do |team|
-      team.team_id == @best_team[0]
-    end.head_coach
   end
 
-  def worst_coach
-    @game_results = Hash.new {|hash, key| hash[key] = []}
-    @find_game_ids = []
-    @searched_season.each do |game|
-      @find_game_ids << game.game_id
-    end
-    
-    @all_games = @game_teams.game_teams.select do |game_team|
-      @find_game_ids.each do |game|
-        game_team.team_id == game
-      end
-    end
-    
-    @all_games.each do |game|
-      @game_results[game.team_id] << game.result
-    end
-
-    @team_win_percentages = Hash.new(0)
-    @game_results.each do |team_id, game|
-      wins = game.count("WIN")
-      total_games = game.count
-      @team_win_percentages[team_id] = percentage(wins, total_games)
-    end
-
-    @worst_team = @team_win_percentages.min_by do |team_id, percentage|
-      percentage
-    end
-  
-    @worst_team_team_name = @game_teams.game_teams.find do |team|
-      team.team_id == @worst_team[0]
-    end.head_coach
-  end
-
-  #Best ratio of shots to goals
-  def most_accurate_team
+  def calculate_team_shot_accuracy
     @goals = Hash.new(0)
     @shots = Hash.new(0)
-    @find_game_ids = []
-    @searched_season.each do |game|
-      @find_game_ids << game.game_id
-    end
     
-    @all_games = @game_teams.game_teams.select do |game_team|
-      @find_game_ids.each do |game|
-        game_team.team_id == game
-      end
-    end
     @all_games.each do |game|
       @goals[game.team_id] += game.goals
       @shots[game.team_id] += game.shots
@@ -128,7 +71,50 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
       shots = @shots[team_id]
       @shot_accuracy[team_id] = percentage(goals, shots)
     end
+  end
 
+  def accumulating_tackles
+    @team_tackles = Hash.new(0)
+
+    @all_games.each do |game|
+      @team_tackles[game.team_id] += game.tackles
+    end
+  end
+
+
+  def winningest_coach
+    
+    method_setup
+    accumulating_game_results
+
+    @best_team = @team_win_percentages.max_by do |team_id, percentage|
+      percentage
+    end
+  
+    @best_team_team_name = @game_teams.game_teams.find do |team|
+      team.team_id == @best_team[0]
+    end.head_coach
+  end
+
+  def worst_coach
+    
+    method_setup
+    accumulating_game_results
+    
+    @worst_team = @team_win_percentages.min_by do |team_id, percentage|
+      percentage
+    end
+  
+    @worst_team_team_name = @game_teams.game_teams.find do |team|
+      team.team_id == @worst_team[0]
+    end.head_coach
+  end
+
+  #Best ratio of shots to goals
+  def most_accurate_team
+    
+    method_setup
+    calculate_team_shot_accuracy
 
     
     @best_accuracy = @shot_accuracy.max_by do |team_id, percentage|
@@ -142,32 +128,10 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
   end
 
   def least_accurate_team
-    @goals = Hash.new(0)
-    @shots = Hash.new(0)
-    @find_game_ids = []
-    @searched_season.each do |game|
-      @find_game_ids << game.game_id
-    end
-    
-    @all_games = @game_teams.game_teams.select do |game_team|
-      @find_game_ids.each do |game|
-        game_team.team_id == game
-      end
-    end
-    @all_games.each do |game|
-      @goals[game.team_id] += game.goals
-      @shots[game.team_id] += game.shots
-    end
 
-    @shot_accuracy = Hash.new(0)
+    method_setup
+    calculate_team_shot_accuracy
 
-    @goals.each do |team_id,goals|
-      shots = @shots[team_id]
-      @shot_accuracy[team_id] = percentage(goals, shots)
-    end
-
-
-    
     @worst_accuracy = @shot_accuracy.min_by do |team_id, percentage|
       percentage
     end
@@ -176,24 +140,11 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
       team.team_id == @worst_accuracy[0]
     end.team_name
   end
-#most tackles in a season
+
   def most_tackles
-
-  @team_tackles = Hash.new(0)
-  @find_game_ids = []
-  @searched_season.each do |game|
-    @find_game_ids << game.game_id
-  end
   
-  @all_games = @game_teams.game_teams.select do |game_team|
-    @find_game_ids.each do |game|
-      game_team.team_id == game
-    end
-  end
-
-  @all_games.each do |game|
-    @team_tackles[game.team_id] += game.tackles
-  end
+  method_setup
+  accumulating_tackles
   
   @most_tackles_team = @team_tackles.max_by do |team_id, tackles|
     tackles
@@ -204,27 +155,12 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
   end.team_name
 
   #Later print a message that mentions goals
-
-
-
   end
 
   def fewest_tackles
-  @team_tackles = Hash.new(0)
-  @find_game_ids = []
-  @searched_season.each do |game|
-    @find_game_ids << game.game_id
-  end
   
-  @all_games = @game_teams.game_teams.select do |game_team|
-    @find_game_ids.each do |game|
-      game_team.team_id == game
-    end
-  end
-
-  @all_games.each do |game|
-    @team_tackles[game.team_id] += game.tackles
-  end
+  method_setup
+  accumulating_tackles
   
   @least_tackles_team = @team_tackles.min_by do |team_id, tackles|
     tackles
@@ -234,9 +170,5 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     team.team_id == @least_tackles_team[0]
   end.team_name
   end
-
-  
-
-
-
 end
+

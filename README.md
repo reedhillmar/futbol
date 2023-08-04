@@ -38,3 +38,20 @@ Your iteration deliverable is to create a README with the following. As you craf
 [LinkedIn](www.linkedin.com/in/reed-hillmar)
 
 [GitHub](https://github.com/reedhillmar)
+
+# Retro
+
+The name of and links (if applicable) to any tools you used for retro
+[Miro](https://miro.com/app/board/uXjVMxDEI44=/?share_link_id=119581307915)
+
+Top 3 things that went well during your project
+
+- Clear communication 
+- Clear designation of work
+- Project planning
+
+Top 3 things your team would do differently next time
+
+- Agendas for check-ins
+- Building initial class structure together
+- Setting up naming conventions 
