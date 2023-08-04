@@ -111,14 +111,14 @@ describe League do
   describe "#best_teams" do
     it "can return a string of the best teams according to a given criteria" do
       expect(@league1.best_teams(@league1.average_goals("total"))).to be_a String
-      expect(@league1.best_teams(@league1.average_goals("total"))).to eq("teams")
+      expect(@league1.best_teams(@league1.average_goals("total"))).to eq("Atlanta United")
     end
   end
 
   describe "#worst_teams" do
     it "can return a string of the worst teams according to a given criteria" do
       expect(@league1.worst_teams(@league1.average_goals("total"))).to be_a String
-      expect(@league1.worst_teams(@league1.average_goals("total"))).to eq("teams")
+      expect(@league1.worst_teams(@league1.average_goals("total"))).to eq("Washington Spirit FC")
     end
   end
 end

@@ -130,4 +130,20 @@ class League
       end
     end
   end
+
+  def best_teams(h)
+    @teams.teams.find_all do |team|
+      best_ids(h).include?(team.team_id)
+    end.map do |team|
+      team.team_name
+    end.join(", ")
+  end
+
+  def worst_teams(h)
+    @teams.teams.find_all do |team|
+      worst_ids(h).include?(team.team_id)
+    end.map do |team|
+      team.team_name
+    end.join(", ")
+  end
 end
