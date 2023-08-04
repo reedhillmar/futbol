@@ -73,6 +73,10 @@ RSpec.describe Season do
     it "can work for different seasons" do
       expect(@alt_season.most_accurate_team).to eq('Chicago Red Stars')
     end
+
+    it "can work for a larger database" do
+      expect(@real_season.most_accurate_team).to eq('DC United')
+    end
   end
 
   describe '#worst_coach' do
@@ -81,6 +85,10 @@ RSpec.describe Season do
     end
     it "can work for different seasons" do
       expect(@alt_season.worst_coach).to eq('Joe Sacco')
+    end
+
+    it "can work for a larger database" do
+      expect(@real_season.worst_coach).to eq('Gerard Gallant')
     end
   end
 
