@@ -70,8 +70,8 @@ class GameStats
 
   def average_goals_per_game
     all_goals = []
-    @games.each do |game|
-      all_goals << game[:away_goals].to_i + game[:home_goals].to_i
+    @games.games.each do |game|
+      all_goals << game.away_goals + game.home_goals
     end
     total_goals = all_goals.sum
     amount_of_games = all_goals.count
