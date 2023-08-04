@@ -205,4 +205,26 @@ class League
   def find_team_ids
     @team_ids = @teams.teams.map {|team| team.team_id}
   end
+
+  def average_goals(hoa)
+    if hoa == "total"
+      @team_ids.each_with_object({}) do |id, h|
+        team_games = @game_teams.game_teams.find_all {|game| game.team_id == id}
+        if !team_games.empty?
+          h[id] = average(team_games.map {|game| game.goals})
+        else
+          h[id] = nil
+        end
+      end
+    else
+      @team_ids.each_with_object({}) do |id, h|
+        team_games = @game_teams.game_teams.find_all {|game| game.team_id == id && game.hoa == hoa}
+        if !team_games.empty?
+          h[id] = average(team_games.map {|game| game.goals})
+        else
+          h[id] = nil
+        end
+      end
+    end
+  end
 end
