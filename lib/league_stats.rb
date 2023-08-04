@@ -254,4 +254,8 @@ class League
       team.team_name
     end.join(", ")
   end
+
+  def find_team_ids
+    @teams.teams.map {|team| team.team_id}
+  end
 end

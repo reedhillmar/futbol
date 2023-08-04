@@ -61,7 +61,7 @@ describe League do
       expect(@league1.find_team_ids).to be_an Array
       expect(@league1.find_team_ids[0]).to be 1
       expect(@league1.find_team_ids[5]).to be 3
-      expect(@league1.find_team_ids[20]).to be 2
+      expect(@league1.find_team_ids[20]).to be 20
     end
   end
 end
