@@ -51,13 +51,16 @@ RSpec.describe Season do
     end
 
     it "can work for different seasons" do
-      expect(@alt_season.least_accurate_team).to eq('Vancouver White Caps FC')
+      expect(@alt_season.least_accurate_team).to eq('Vancouver Whitecaps FC')
     end
   end
 
   describe '#most_accurate_team' do
     it "can return which team had the highest shot to goal percentage in a season" do
-      expect(@season.most_accurate_team).to eq('Atlanta United')
+      expect(@season.most_accurate_team).to eq('Houston Dynamo')
+    end
+    it "can work for different seasons" do
+      expect(@alt_season.least_accurate_team).to eq('Vancouver Whitecaps FC')
     end
   end
 
@@ -69,7 +72,7 @@ RSpec.describe Season do
 
   describe '#winningest_coach' do
     it "can return the coach with the best win loss percentage" do
-      expect(@season.winningest_coach).to eq('John Hynes')
+      expect(@season.winningest_coach).to eq('John Tortorella')
     end
   end
 
