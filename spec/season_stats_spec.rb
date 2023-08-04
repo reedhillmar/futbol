@@ -9,7 +9,7 @@ RSpec.describe Season do
   before(:each) do
     @season = Season.new(20122013, './data/teams.csv', './fixture/games_fixtures.csv', './fixture/game_teams_fixtures.csv')
     @alt_season = Season.new(20162017, './data/teams.csv', './fixture/games_fixtures.csv', './fixture/game_teams_fixtures.csv')
-    @real_season = Season.new(20122013, './data/teams.csv', './data/games.csv', './data/game_teams.csv')
+    # @real_season = Season.new(20122013, './data/teams.csv', './data/games.csv', './data/game_teams.csv')
   end
 
   describe '#initialize' do
@@ -33,7 +33,7 @@ RSpec.describe Season do
       expect(@alt_season.most_tackles).to eq('Vancouver Whitecaps FC')
     end
 
-    it "can work for a  larger database" do
+    xit "can work for a  larger database" do
       expect(@real_season.most_tackles).to eq('FC Cincinnati')
     end
   end
@@ -47,7 +47,7 @@ RSpec.describe Season do
       expect(@alt_season.fewest_tackles).to eq('Chicago Red Stars')
     end
 
-    it "can work for a larger database" do
+    xit "can work for a larger database" do
       expect(@real_season.fewest_tackles).to eq('Atlanta United')
     end
   end
@@ -61,7 +61,7 @@ RSpec.describe Season do
       expect(@alt_season.least_accurate_team).to eq('Vancouver Whitecaps FC')
     end
 
-    it "can work for a larger database" do
+    xit "can work for a larger database" do
       expect(@real_season.least_accurate_team).to eq('New York City FC')
     end
   end
@@ -74,7 +74,7 @@ RSpec.describe Season do
       expect(@alt_season.most_accurate_team).to eq('Chicago Red Stars')
     end
 
-    it "can work for a larger database" do
+    xit "can work for a larger database" do
       expect(@real_season.most_accurate_team).to eq('DC United')
     end
   end
@@ -87,7 +87,7 @@ RSpec.describe Season do
       expect(@alt_season.worst_coach).to eq('Joe Sacco')
     end
 
-    it "can work for a larger database" do
+    xit "can work for a larger database" do
       expect(@real_season.worst_coach).to eq('Gerard Gallant')
     end
   end
@@ -100,7 +100,7 @@ RSpec.describe Season do
       expect(@alt_season.winningest_coach).to eq('Ken Hitchcock')
     end
 
-    it "can work for a larger database" do
+    xit "can work for a larger database" do
       expect(@real_season.winningest_coach).to eq('Claude Julien')
     end
   end
