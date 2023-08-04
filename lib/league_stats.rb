@@ -23,15 +23,6 @@ class League
   end
 
   def best_offense
-    # Name of the team with the highest average number of goals scored per game across all seasons
-
-    # find team_id for each team
-    # team_ids = @teams.teams.map {|team| team.team_id}
-
-    # for each game_team, find all games with matching team_id
-      # for each set of games, map goals
-      # use average to return goals/game across all seasons
-    # find team_id with highest gpg
     h = @team_ids.each_with_object({}) do |id, h|
       team_games = @game_teams.game_teams.find_all {|game| game.team_id == id}
       if !team_games.empty?
@@ -62,15 +53,6 @@ class League
   end
 
   def worst_offense
-    # Name of the team with the lowest average number of goals scored per game across all seasons
-
-    # find team_id for each team
-    # team_ids = @teams.teams.map {|team| team.team_id}
-
-    # for each game_team, find all games with matching team_id
-      # for each set of games, map goals
-      # use average to return goals/game across all seasons
-    # find team_id with lowest gpg
     h = @team_ids.each_with_object({}) do |id, h|
       team_games = @game_teams.game_teams.find_all {|game| game.team_id == id}
       if !team_games.empty?
@@ -101,15 +83,6 @@ class League
   end
 
   def highest_scoring_visitor
-    # Name of the team with the highest average score per game across all seasons when they are away.
-
-    # find team_id for each team
-    # team_ids = @teams.teams.map {|team| team.team_id}
-
-    # for each game_team, find all away games with matching team_id
-      # for each set of games, map goals
-      # use average to return goals/game across all seasons
-    # find team_id with highest gpg
     h = @team_ids.each_with_object({}) do |id, h|
       away_games = @game_teams.game_teams.find_all {|game| game.team_id == id && game.hoa == "away"}
       if !away_games.empty?
@@ -140,15 +113,6 @@ class League
   end
 
   def highest_scoring_home_team
-    # Name of the team with the highest average score per game across all seasons when they are home.
-
-    # find team_id for each team
-    # team_ids = @teams.teams.map {|team| team.team_id}
-
-    # for each game_team, find all home games with matching team_id
-      # for each set of games, map goals
-      # use average to return goals/game across all seasons
-    # find team_id with highest gpg
     h = @team_ids.each_with_object({}) do |id, h|
       home_games = @game_teams.game_teams.find_all {|game| game.team_id == id && game.hoa == "home"}
       if !home_games.empty?
@@ -179,15 +143,6 @@ class League
   end
 
   def lowest_scoring_visitor
-    # Name of the team with the lowest average score per game across all seasons when they are away.
-
-    # find team_id for each team
-    # team_ids = @teams.teams.map {|team| team.team_id}
-
-    # for each game_team, find all away games with matching team_id
-      # for each set of games, map goals
-      # use average to return goals/game across all seasons
-    # find team_id with lowest gpg
     h = @team_ids.each_with_object({}) do |id, h|
       away_games = @game_teams.game_teams.find_all {|game| game.team_id == id && game.hoa == "away"}
       if !away_games.empty?
@@ -218,15 +173,6 @@ class League
   end
 
   def lowest_scoring_home_team
-    # Name of the team with the lowest average score per game across all seasons when they are home.
-
-    # find team_id for each team
-    # team_ids = @teams.teams.map {|team| team.team_id}
-
-    # for each game_team, find all home games with matching team_id
-      # for each set of games, map goals
-      # use average to return goals/game across all seasons
-    # find team_id with lowest gpg
     h = @team_ids.each_with_object({}) do |id, h|
       home_games = @game_teams.game_teams.find_all {|game| game.team_id == id && game.hoa == "home"}
       if !home_games.empty?
