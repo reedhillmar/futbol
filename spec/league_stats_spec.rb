@@ -84,27 +84,27 @@ describe League do
 
   describe "#best_value" do
     it "return the max value of a hash" do
-      expect(@league1.best_value(average_goals("total"))).to be 0
+      expect(@league1.best_value(@league1.average_goals("total"))).to be 4.0
     end
   end
 
   describe "#worst_value" do
     it "return the min value of a hash" do
-      expect(@league1.worst_value(average_goals("total"))).to be 0
+      expect(@league1.worst_value(@league1.average_goals("total"))).to be 0.0
     end
   end
 
   describe "#best_ids" do
     it "return an array of team ids that have the max value of a hash" do
-      expect(@league1.best_ids(average_goals("total"))).to be_an Array
-      expect(@league1.best_ids(average_goals("total"))[0]).to be 1
+      expect(@league1.best_ids(@league1.average_goals("total"))).to be_an Array
+      expect(@league1.best_ids(@league1.average_goals("total"))[0]).to be 1
     end
   end
 
   describe "#worst_ids" do
     it "return an array of team ids that have the min value of a hash" do
-      expect(@league1.worst_ids(average_goals("total"))).to be_an Array
-      expect(@league1.worst_ids(average_goals("total"))[0]).to be 1
+      expect(@league1.worst_ids(@league1.average_goals("total"))).to be_an Array
+      expect(@league1.worst_ids(@league1.average_goals("total"))[0]).to be 22
     end
   end
 end

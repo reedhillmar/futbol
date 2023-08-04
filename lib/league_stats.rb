@@ -174,4 +174,44 @@ class League
       end
     end
   end
+
+  def best_value(h)
+    h.max_by do |_, value|
+      if value != nil
+        value
+      else
+        0
+      end
+    end[1]
+  end
+
+  def worst_value(h)
+    h.min_by do |_, value|
+      if value != nil
+        value
+      else
+        100
+      end
+    end[1]
+  end
+
+  def best_ids(h)
+    h.flat_map do |id, value|
+      if value == best_value(h)
+        id
+      else
+        []
+      end
+    end
+  end
+
+  def worst_ids(h)
+    h.flat_map do |id, value|
+      if value == worst_value(h)
+        id
+      else
+        []
+      end
+    end
+  end
 end
