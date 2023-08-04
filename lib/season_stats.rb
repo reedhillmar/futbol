@@ -1,4 +1,3 @@
-#./lib/season.rb
 require 'csv'
 require 'spec_helper'
 require_relative 'game_teams_factory'
@@ -10,15 +9,15 @@ require_relative 'calculable'
 class Season
   include Calculable
 attr_reader :year, :teams, :games, :game_teams, :searched_season
-  def initialize(year)
+  def initialize(year,teams_database, games_database, game_teams_database)
     #Add database arguments later
     @year = year
     @teams = TeamsFactory.new
-    @teams.create_teams('./data/teams.csv')
+    @teams.create_teams(teams_database)
     @games = GamesFactory.new
-    @games.create_games('./fixture/games_fixtures.csv')
+    @games.create_games(games_database)
     @game_teams = GameTeamsFactory.new
-    @game_teams.create_game_teams('./fixture/game_teams_fixtures.csv')
+    @game_teams.create_game_teams(game_teams_database)
     @game_teams
     @searched_season = []
     within_searched_season

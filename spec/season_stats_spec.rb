@@ -7,8 +7,9 @@ require './lib/calculable'
 
 RSpec.describe Season do
   before(:each) do
-    @searched_season = Season.new(20122013)
+    @searched_season = Season.new(20122013, './data/teams.csv', './fixture/games_fixtures.csv', './fixture/game_teams_fixtures.csv')
   end
+
   describe '#initialize' do
     it "can initialize" do
       expect(@searched_season).to be_a Season
