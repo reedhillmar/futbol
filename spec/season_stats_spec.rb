@@ -77,6 +77,9 @@ RSpec.describe Season do
     it "can return the coach with the best win loss percentage" do
       expect(@season.winningest_coach).to eq('John Tortorella')
     end
+    it "can work for different seasons" do
+      expect(@alt_season.winningest_coach).to eq('Ken Hitchcock')
+    end
   end
 
   describe '#method_setup' do
