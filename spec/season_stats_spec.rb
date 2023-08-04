@@ -99,6 +99,10 @@ RSpec.describe Season do
     it "can work for different seasons" do
       expect(@alt_season.winningest_coach).to eq('Ken Hitchcock')
     end
+
+    it "can work for a larger database" do
+      expect(@real_season.winningest_coach).to eq('Claude Julien')
+    end
   end
 
   describe '#method_setup' do
