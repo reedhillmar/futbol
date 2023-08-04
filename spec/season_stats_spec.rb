@@ -57,8 +57,15 @@ RSpec.describe Season do
 
   describe '#winningest_coach' do
     it "can return the coach with the best win loss percentage" do
-    searched_season = Season.new(20122013)
-    expect(searched_season.winningest_coach).to eq('John Hynes')
+      searched_season = Season.new(20122013)
+      expect(searched_season.winningest_coach).to eq('John Hynes')
+    end
+  end
+
+  describe '#method_setup' do
+    it 'can be used to setup the functionality of other methods' do
+      searched_season = Season.new(20122013)
+      expect(searched_season.method_setup).to include(GameTeamsFactory)
     end
   end
   
