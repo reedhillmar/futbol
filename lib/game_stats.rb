@@ -62,10 +62,10 @@ class GameStats
   end
 
   def percentage_ties
-    ties = @games.count do |game|
+    ties = @games.games.count do |game|
       game.away_goals == game.home_goals
     end
-    (ties.to_f / @games.length).round(2)
+    (ties.to_f / @games.games.length).round(2)
   end
 
   def average_goals_per_game

@@ -38,4 +38,9 @@ describe GameStats do
     end
   end
 
+  describe '#percentage_ties' do 
+    it 'returns the percentage of ties' do 
+      expect(@game1.percentage_ties).to eq(0.18)
+    end
+  end
 end
