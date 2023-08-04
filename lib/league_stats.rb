@@ -24,22 +24,8 @@ class League
 
   def best_offense
     h = average_goals("total")
-    best_value = h.max_by do |_, value|
-      if value != nil
-        value
-      else
-        0
-      end
-    end[1]
-    best_ids = h.flat_map do |id, value|
-      if value == best_value
-        id
-      else
-        []
-      end
-    end
     @teams.teams.find_all do |team|
-      best_ids.include?(team.team_id)
+      best_ids(h).include?(team.team_id)
     end.map do |team|
       team.team_name
     end.join(", ")
@@ -47,22 +33,8 @@ class League
 
   def worst_offense
     h = average_goals("total")
-    worst_value = h.min_by do |_, value|
-      if value != nil
-        value
-      else
-        100
-      end
-    end[1]
-    worst_ids = h.flat_map do |id, value|
-      if value == worst_value
-        id
-      else
-        []
-      end
-    end
     @teams.teams.find_all do |team|
-      worst_ids.include?(team.team_id)
+      worst_ids(h).include?(team.team_id)
     end.map do |team|
       team.team_name
     end.join(", ")
@@ -70,22 +42,8 @@ class League
 
   def highest_scoring_visitor
     h = average_goals("away")
-    best_value = h.max_by do |_, value|
-      if value != nil
-        value
-      else
-        0
-      end
-    end[1]
-    best_ids = h.flat_map do |id, value|
-      if value == best_value
-        id
-      else
-        []
-      end
-    end
     @teams.teams.find_all do |team|
-      best_ids.include?(team.team_id)
+      best_ids(h).include?(team.team_id)
     end.map do |team|
       team.team_name
     end.join(", ")
@@ -93,22 +51,8 @@ class League
 
   def highest_scoring_home_team
     h = average_goals("home")
-    best_value = h.max_by do |_, value|
-      if value != nil
-        value
-      else
-        0
-      end
-    end[1]
-    best_ids = h.flat_map do |id, value|
-      if value == best_value
-        id
-      else
-        []
-      end
-    end
     @teams.teams.find_all do |team|
-      best_ids.include?(team.team_id)
+      best_ids(h).include?(team.team_id)
     end.map do |team|
       team.team_name
     end.join(", ")
@@ -116,22 +60,8 @@ class League
 
   def lowest_scoring_visitor
     h = average_goals("away")
-    worst_value = h.min_by do |_, value|
-      if value != nil
-        value
-      else
-        100
-      end
-    end[1]
-    worst_ids = h.flat_map do |id, value|
-      if value == worst_value
-        id
-      else
-        []
-      end
-    end
     @teams.teams.find_all do |team|
-      worst_ids.include?(team.team_id)
+      worst_ids(h).include?(team.team_id)
     end.map do |team|
       team.team_name
     end.join(", ")
@@ -139,22 +69,8 @@ class League
 
   def lowest_scoring_home_team
     h = average_goals("home")
-    worst_value = h.min_by do |_, value|
-      if value != nil
-        value
-      else
-        100
-      end
-    end[1]
-    worst_ids = h.flat_map do |id, value|
-      if value == worst_value
-        id
-      else
-        []
-      end
-    end
     @teams.teams.find_all do |team|
-      worst_ids.include?(team.team_id)
+      worst_ids(h).include?(team.team_id)
     end.map do |team|
       team.team_name
     end.join(", ")
