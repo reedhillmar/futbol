@@ -67,7 +67,7 @@ describe GameStats do
         20122013=>4.25, 20132014=>3.92, 20152016=>4.0, 
         20162017=>3.67, 20172018=>4.33, 20142015=>3.11
       }
-require 'pry'; binding.pry
+      
       expect(@game1.average_goals_by_season).to eq(expected)
     end
   end
