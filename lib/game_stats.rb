@@ -82,26 +82,28 @@ class GameStats
   def count_of_games_by_season
     games_by_season = Hash.new(0)
     @games.games.each do |game|
-      require 'pry'; binding.pry
+      key = game.season 
       if game.season != nil 
-        games_by_season[game[:season]] += 1
+        games_by_season[key] += 1
       else 
-        games_by_season[game[:season]] = 1
+        games_by_season[key] = 1
       end 
     end 
     games_by_season
   end
 
-  # def average_goals_by_season
-  #   goals_by_season = Hash.new(0)
-  #   @games.each do |game|
-  #     goals_by_season[game[:season]] = []
-  #   end
-  #   @games.each do |game|
-  #     all_goals = game[:away_goals].to_i + game[:home_goals].to_i
-  #     goals_by_season[game[:season]]<< all_goals
-  #   end
-  #   goals_by_season.transform_values! {|v| v.sum.to_f / v.count}
-  #   goals_by_season.transform_values! {|v| v.round(2)}
-  # end
+  def average_goals_by_season
+    goals_by_season = Hash.new(0)
+    @games.games.each do |game|
+      key = game.season
+      goals_by_season[key] = []
+    end
+    @games.games.each do |game|
+      key = game.season
+      all_goals = game.away_goals + game.home_goals
+      goals_by_season[key]<< all_goals
+    end
+    goals_by_season.transform_values! {|v| v.sum.to_f / v.count}
+    goals_by_season.transform_values! {|v| v.round(2)}
+  end
 end
