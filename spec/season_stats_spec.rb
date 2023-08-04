@@ -9,6 +9,7 @@ RSpec.describe Season do
   before(:each) do
     @season = Season.new(20122013, './data/teams.csv', './fixture/games_fixtures.csv', './fixture/game_teams_fixtures.csv')
     @alt_season = Season.new(20162017, './data/teams.csv', './fixture/games_fixtures.csv', './fixture/game_teams_fixtures.csv')
+    @real_season = Season.new(20122013, './data/teams.csv', './data/games.csv', './data/game_teams.csv')
   end
 
   describe '#initialize' do
@@ -25,13 +26,15 @@ RSpec.describe Season do
 
   describe '#most_tackles' do
     it "can return which team has the most tackles in a season" do
-      
       expect(@season.most_tackles).to eq('Houston Dynamo')
-  
     end
 
     it "can work for different seasons" do
       expect(@alt_season.most_tackles).to eq('Vancouver Whitecaps FC')
+    end
+
+    it "can work for an actual database" do
+      expect(@real_season.most_tackles).to eq('FC Cincinnati')
     end
   end
 
