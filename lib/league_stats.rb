@@ -8,13 +8,14 @@ require_relative "teams"
 class League
   include Calculable 
 
-  attr_reader :teams, :games, :game_teams
+  attr_reader :teams, :games, :game_teams, :team_ids
 
   def initialize(teams_database, games_database, game_teams_database)
     @teams = TeamsFactory.new
     @teams.create_teams(teams_database)
     @game_teams = GameTeamsFactory.new
     @game_teams.create_game_teams(game_teams_database)
+    @team_ids = []
   end
 
   def count_of_teams
@@ -256,6 +257,6 @@ class League
   end
 
   def find_team_ids
-    @teams.teams.map {|team| team.team_id}
+    @team_ids = @teams.teams.map {|team| team.team_id}
   end
 end

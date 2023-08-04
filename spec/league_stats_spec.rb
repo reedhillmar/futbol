@@ -10,6 +10,8 @@ describe League do
       expect(@league1).to be_a League
       expect(@league1.teams).to be_a TeamsFactory
       expect(@league1.game_teams).to be_a GameTeamsFactory
+      expect(@league1.team_ids).to be_an Array
+      expect(@league1.team_ids.empty?).to be true
     end
   end
 
@@ -58,10 +60,11 @@ describe League do
 
   describe "#find_team_ids" do
     it "can return an array of team ids" do
-      expect(@league1.find_team_ids).to be_an Array
-      expect(@league1.find_team_ids[0]).to be 1
-      expect(@league1.find_team_ids[5]).to be 3
-      expect(@league1.find_team_ids[20]).to be 20
+      @league1.find_team_ids
+      
+      expect(@league1.team_ids[0]).to be 1
+      expect(@league1.team_ids[5]).to be 3
+      expect(@league1.team_ids[20]).to be 20
     end
   end
 end
