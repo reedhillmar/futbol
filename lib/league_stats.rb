@@ -23,14 +23,7 @@ class League
   end
 
   def best_offense
-    h = @team_ids.each_with_object({}) do |id, h|
-      team_games = @game_teams.game_teams.find_all {|game| game.team_id == id}
-      if !team_games.empty?
-        h[id] = average(team_games.map {|game| game.goals})
-      else
-        h[id] = nil
-      end
-    end
+    h = average_goals("total")
     best_value = h.max_by do |_, value|
       if value != nil
         value
@@ -53,14 +46,7 @@ class League
   end
 
   def worst_offense
-    h = @team_ids.each_with_object({}) do |id, h|
-      team_games = @game_teams.game_teams.find_all {|game| game.team_id == id}
-      if !team_games.empty?
-        h[id] = average(team_games.map {|game| game.goals})
-      else
-        h[id] = nil
-      end
-    end
+    h = average_goals("total")
     worst_value = h.min_by do |_, value|
       if value != nil
         value
@@ -83,14 +69,7 @@ class League
   end
 
   def highest_scoring_visitor
-    h = @team_ids.each_with_object({}) do |id, h|
-      away_games = @game_teams.game_teams.find_all {|game| game.team_id == id && game.hoa == "away"}
-      if !away_games.empty?
-        h[id] = average(away_games.map {|game| game.goals})
-      else
-        h[id] = nil
-      end
-    end
+    h = average_goals("away")
     best_value = h.max_by do |_, value|
       if value != nil
         value
@@ -113,14 +92,7 @@ class League
   end
 
   def highest_scoring_home_team
-    h = @team_ids.each_with_object({}) do |id, h|
-      home_games = @game_teams.game_teams.find_all {|game| game.team_id == id && game.hoa == "home"}
-      if !home_games.empty?
-        h[id] = average(home_games.map {|game| game.goals})
-      else
-        h[id] = nil
-      end
-    end
+    h = average_goals("home")
     best_value = h.max_by do |_, value|
       if value != nil
         value
@@ -143,14 +115,7 @@ class League
   end
 
   def lowest_scoring_visitor
-    h = @team_ids.each_with_object({}) do |id, h|
-      away_games = @game_teams.game_teams.find_all {|game| game.team_id == id && game.hoa == "away"}
-      if !away_games.empty?
-        h[id] = average(away_games.map {|game| game.goals})
-      else
-        h[id] = nil
-      end
-    end
+    h = average_goals("away")
     worst_value = h.min_by do |_, value|
       if value != nil
         value
@@ -173,14 +138,7 @@ class League
   end
 
   def lowest_scoring_home_team
-    h = @team_ids.each_with_object({}) do |id, h|
-      home_games = @game_teams.game_teams.find_all {|game| game.team_id == id && game.hoa == "home"}
-      if !home_games.empty?
-        h[id] = average(home_games.map {|game| game.goals})
-      else
-        h[id] = nil
-      end
-    end
+    h = average_goals("home")
     worst_value = h.min_by do |_, value|
       if value != nil
         value
@@ -207,23 +165,12 @@ class League
   end
 
   def average_goals(hoa)
-    if hoa == "total"
-      @team_ids.each_with_object({}) do |id, h|
-        team_games = @game_teams.game_teams.find_all {|game| game.team_id == id}
-        if !team_games.empty?
-          h[id] = average(team_games.map {|game| game.goals})
-        else
-          h[id] = nil
-        end
-      end
-    else
-      @team_ids.each_with_object({}) do |id, h|
-        team_games = @game_teams.game_teams.find_all {|game| game.team_id == id && game.hoa == hoa}
-        if !team_games.empty?
-          h[id] = average(team_games.map {|game| game.goals})
-        else
-          h[id] = nil
-        end
+    @team_ids.each_with_object({}) do |id, h|
+      team_games = @game_teams.game_teams.find_all {|game| game.team_id == id && (hoa == "total" || game.hoa == hoa)}
+      if !team_games.empty?
+        h[id] = average(team_games.map {|game| game.goals})
+      else
+        h[id] = nil
       end
     end
   end
