@@ -25,7 +25,7 @@ class GameStats
 
   def highest_total_score
     highest_score = []
-    @games.each do |game|
+    @games.games.each do |game|
       highest_score << (game.home_goals + game.away_goals)
     end
     highest_score.max 
@@ -33,7 +33,7 @@ class GameStats
 
   def lowest_total_score
     lowest_score = []
-    @games.each do |game|
+    @games.games.each do |game|
       lowest_score << (game.home_goals + game.away_goals)
     end
     lowest_score.min 
@@ -41,23 +41,23 @@ class GameStats
 
   def percentage_home_wins
     home_wins = 0 
-    @games.each do |game|
+    @games.games.each do |game|
       if game.home_goals > game.away_goals
         home_wins += 1
       end
     end
-      percentage_wins = (home_wins.to_f / @games.count.to_f) * 100
+      percentage_wins = (home_wins.to_f / @games.games.count.to_f) * 100
       percentage_wins.round(2)
   end
 
   def percentage_visitor_wins
     visit_wins = 0 
-    @games.each do |game|
+    @games.games.each do |game|
       if game.away_goals > game.home_goals
         visit_wins += 1
       end
     end
-      percentage_wins = (visit_wins.to_f / @games.count.to_f) * 100
+      percentage_wins = (visit_wins.to_f / @games.games.count.to_f) * 100
       percentage_wins.round(2)
   end
 

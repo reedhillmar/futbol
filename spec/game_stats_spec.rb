@@ -16,8 +16,26 @@ describe GameStats do
 
   describe '#highest_total_score' do 
     it 'returns a games highest total score' do 
-      require 'pry'; binding.pry
-      expect(@game1.highest_total_score).to eq(11)
+      expect(@game1.highest_total_score).to eq(7)
     end
   end
+
+  describe '#lowest_total_score' do 
+    it 'returns a games lowest total score' do 
+      expect(@game1.lowest_total_score).to eq(1)
+    end
+  end
+
+  describe '#percentage_home_wins' do 
+    it 'returns the percentage of home wins' do 
+      expect(@game1.percentage_home_wins).to eq(45.45)
+    end
+  end
+
+  describe '#percentage_visitor_wins' do 
+    it 'returns the percentage of visitor wins' do 
+      expect(@game1.percentage_visitor_wins).to eq(36.36)
+    end
+  end
+
 end
