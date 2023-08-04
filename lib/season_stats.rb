@@ -40,14 +40,17 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     end
   end
 
+  def accumulating_game_results
+    @all_games.each do |game|
+      @game_results[game.team_id] << game.result
+    end
+  end
+
   def winningest_coach
     @game_results = Hash.new {|hash, key| hash[key] = []}
     
     method_setup
-
-    @all_games.each do |game|
-      @game_results[game.team_id] << game.result
-    end
+    accumulating_game_results
 
     @team_win_percentages = Hash.new(0)
     @game_results.each do |team_id, game|
@@ -69,10 +72,7 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     @game_results = Hash.new {|hash, key| hash[key] = []}
     
     method_setup
-    
-    @all_games.each do |game|
-      @game_results[game.team_id] << game.result
-    end
+    accumulating_game_results
 
     @team_win_percentages = Hash.new(0)
     @game_results.each do |team_id, game|
@@ -189,3 +189,38 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
   end.team_name
   end
 end
+
+# @all_games.each do |game|
+#   @game_results[game.team_id] << game.result
+# end
+
+# @all_games.each do |game|
+#   @game_results[game.team_id] << game.result
+# end
+
+# @all_games.each do |game|
+#   @goals[game.team_id] += game.goals
+#   @shots[game.team_id] += game.shots
+# end
+
+# @all_games.each do |game|
+#   @goals[game.team_id] += game.goals
+#   @shots[game.team_id] += game.shots
+# end
+
+# @all_games.each do |game|
+#   @team_tackles[game.team_id] += game.tackles
+# end
+
+# @all_games.each do |game|
+#   @team_tackles[game.team_id] += game.tackles
+# end
+
+# def accumulating_stats(Hash, stat)
+#   @all_games.each do |game|
+#     hash[game.team_id] += game.stat
+#   end
+# end
+
+
+
