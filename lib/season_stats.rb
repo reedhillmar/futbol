@@ -41,12 +41,25 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
   end
 
   def accumulating_game_results
+    @game_results = Hash.new {|hash, key| hash[key] = []}
+    
     @all_games.each do |game|
       @game_results[game.team_id] << game.result
+    end
+
+    @team_win_percentages = Hash.new(0)
+
+    @game_results.each do |team_id, game|
+      wins = game.count("WIN")
+      total_games = game.count
+      @team_win_percentages[team_id] = percentage(wins, total_games)
     end
   end
 
   def calculate_team_shot_accuracy
+    @goals = Hash.new(0)
+    @shots = Hash.new(0)
+    
     @all_games.each do |game|
       @goals[game.team_id] += game.goals
       @shots[game.team_id] += game.shots
@@ -60,18 +73,19 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     end
   end
 
+  def accumulating_tackles
+    @team_tackles = Hash.new(0)
+
+    @all_games.each do |game|
+      @team_tackles[game.team_id] += game.tackles
+    end
+  end
+
+
   def winningest_coach
-    @game_results = Hash.new {|hash, key| hash[key] = []}
     
     method_setup
     accumulating_game_results
-
-    @team_win_percentages = Hash.new(0)
-    @game_results.each do |team_id, game|
-      wins = game.count("WIN")
-      total_games = game.count
-      @team_win_percentages[team_id] = percentage(wins, total_games)
-    end
 
     @best_team = @team_win_percentages.max_by do |team_id, percentage|
       percentage
@@ -83,18 +97,10 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
   end
 
   def worst_coach
-    @game_results = Hash.new {|hash, key| hash[key] = []}
     
     method_setup
     accumulating_game_results
-
-    @team_win_percentages = Hash.new(0)
-    @game_results.each do |team_id, game|
-      wins = game.count("WIN")
-      total_games = game.count
-      @team_win_percentages[team_id] = percentage(wins, total_games)
-    end
-
+    
     @worst_team = @team_win_percentages.min_by do |team_id, percentage|
       percentage
     end
@@ -106,8 +112,6 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
 
   #Best ratio of shots to goals
   def most_accurate_team
-    @goals = Hash.new(0)
-    @shots = Hash.new(0)
     
     method_setup
     calculate_team_shot_accuracy
@@ -124,9 +128,7 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
   end
 
   def least_accurate_team
-    @goals = Hash.new(0)
-    @shots = Hash.new(0)
-    
+
     method_setup
     calculate_team_shot_accuracy
 
@@ -140,14 +142,9 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
   end
 
   def most_tackles
-
-  @team_tackles = Hash.new(0)
   
   method_setup
-
-  @all_games.each do |game|
-    @team_tackles[game.team_id] += game.tackles
-  end
+  accumulating_tackles
   
   @most_tackles_team = @team_tackles.max_by do |team_id, tackles|
     tackles
@@ -161,13 +158,9 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
   end
 
   def fewest_tackles
-  @team_tackles = Hash.new(0)
   
   method_setup
-
-  @all_games.each do |game|
-    @team_tackles[game.team_id] += game.tackles
-  end
+  accumulating_tackles
   
   @least_tackles_team = @team_tackles.min_by do |team_id, tackles|
     tackles
