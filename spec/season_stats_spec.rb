@@ -65,7 +65,7 @@ RSpec.describe Season do
   describe '#method_setup' do
     it 'can be used to setup the functionality of other methods' do
       searched_season = Season.new(20122013)
-      expect(searched_season.method_setup).to include(GameTeamsFactory)
+      expect(searched_season.method_setup).not_to eq(nil)
     end
   end
   

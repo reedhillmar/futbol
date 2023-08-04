@@ -9,11 +9,6 @@ require_relative 'calculable'
 
 class Season
   include Calculable
-  
-
-  # season, game_id      'games_fixtures'
-  # game_id, team_id, tackles   'games_teams_fixtures'
-  # team_id, franchiseId 'teams.csv'
 attr_reader :year, :teams, :games, :game_teams, :searched_season
   def initialize(year)
     #Add database arguments later
@@ -37,8 +32,7 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     end
   end
 
-  def winningest_coach
-    @game_results = Hash.new {|hash, key| hash[key] = []}
+  def method_setup
     @find_game_ids = []
     @searched_season.each do |game|
       @find_game_ids << game.game_id
@@ -49,7 +43,13 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
         game_team.team_id == game
       end
     end
+  end
+
+  def winningest_coach
+    @game_results = Hash.new {|hash, key| hash[key] = []}
     
+    method_setup
+
     @all_games.each do |game|
       @game_results[game.team_id] << game.result
     end
@@ -72,16 +72,8 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
 
   def worst_coach
     @game_results = Hash.new {|hash, key| hash[key] = []}
-    @find_game_ids = []
-    @searched_season.each do |game|
-      @find_game_ids << game.game_id
-    end
     
-    @all_games = @game_teams.game_teams.select do |game_team|
-      @find_game_ids.each do |game|
-        game_team.team_id == game
-      end
-    end
+    method_setup
     
     @all_games.each do |game|
       @game_results[game.team_id] << game.result
@@ -107,16 +99,9 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
   def most_accurate_team
     @goals = Hash.new(0)
     @shots = Hash.new(0)
-    @find_game_ids = []
-    @searched_season.each do |game|
-      @find_game_ids << game.game_id
-    end
     
-    @all_games = @game_teams.game_teams.select do |game_team|
-      @find_game_ids.each do |game|
-        game_team.team_id == game
-      end
-    end
+    method_setup
+
     @all_games.each do |game|
       @goals[game.team_id] += game.goals
       @shots[game.team_id] += game.shots
@@ -144,16 +129,9 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
   def least_accurate_team
     @goals = Hash.new(0)
     @shots = Hash.new(0)
-    @find_game_ids = []
-    @searched_season.each do |game|
-      @find_game_ids << game.game_id
-    end
     
-    @all_games = @game_teams.game_teams.select do |game_team|
-      @find_game_ids.each do |game|
-        game_team.team_id == game
-      end
-    end
+    method_setup
+
     @all_games.each do |game|
       @goals[game.team_id] += game.goals
       @shots[game.team_id] += game.shots
@@ -176,20 +154,12 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
       team.team_id == @worst_accuracy[0]
     end.team_name
   end
-#most tackles in a season
+
   def most_tackles
 
   @team_tackles = Hash.new(0)
-  @find_game_ids = []
-  @searched_season.each do |game|
-    @find_game_ids << game.game_id
-  end
   
-  @all_games = @game_teams.game_teams.select do |game_team|
-    @find_game_ids.each do |game|
-      game_team.team_id == game
-    end
-  end
+  method_setup
 
   @all_games.each do |game|
     @team_tackles[game.team_id] += game.tackles
@@ -204,23 +174,12 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
   end.team_name
 
   #Later print a message that mentions goals
-
-
-
   end
 
   def fewest_tackles
   @team_tackles = Hash.new(0)
-  @find_game_ids = []
-  @searched_season.each do |game|
-    @find_game_ids << game.game_id
-  end
   
-  @all_games = @game_teams.game_teams.select do |game_team|
-    @find_game_ids.each do |game|
-      game_team.team_id == game
-    end
-  end
+  method_setup
 
   @all_games.each do |game|
     @team_tackles[game.team_id] += game.tackles
@@ -234,9 +193,4 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     team.team_id == @least_tackles_team[0]
   end.team_name
   end
-
-  
-
-
-
 end
