@@ -33,7 +33,7 @@ RSpec.describe Season do
       expect(@alt_season.most_tackles).to eq('Vancouver Whitecaps FC')
     end
 
-    it "can work for an actual database" do
+    it "can work for a  larger database" do
       expect(@real_season.most_tackles).to eq('FC Cincinnati')
     end
   end
@@ -46,6 +46,10 @@ RSpec.describe Season do
     it "can work for different seasons" do
       expect(@alt_season.fewest_tackles).to eq('Chicago Red Stars')
     end
+
+    it "can work for a larger database" do
+      expect(@real_season.fewest_tackles).to eq('Atlanta United')
+    end
   end
 
   describe '#least_accurate_team' do
@@ -55,6 +59,10 @@ RSpec.describe Season do
 
     it "can work for different seasons" do
       expect(@alt_season.least_accurate_team).to eq('Vancouver Whitecaps FC')
+    end
+
+    it "can work for a larger database" do
+      expect(@real_season.least_accurate_team).to eq('New York City FC')
     end
   end
 
