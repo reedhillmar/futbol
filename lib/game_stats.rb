@@ -79,17 +79,18 @@ class GameStats
     average_goals.round(2)
   end
 
-  # def count_of_games_by_season
-  #   games_by_season = {}
-  #   @games.each do |game|
-  #     if games_by_season[game[:season]] != nil 
-  #       games_by_season[game[:season]] += 1
-  #     else 
-  #       games_by_season[game[:season]] = 1
-  #     end 
-  #   end 
-  #   games_by_season
-  # end
+  def count_of_games_by_season
+    games_by_season = Hash.new(0)
+    @games.games.each do |game|
+      require 'pry'; binding.pry
+      if game.season != nil 
+        games_by_season[game[:season]] += 1
+      else 
+        games_by_season[game[:season]] = 1
+      end 
+    end 
+    games_by_season
+  end
 
   # def average_goals_by_season
   #   goals_by_season = Hash.new(0)
