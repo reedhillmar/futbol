@@ -9,7 +9,6 @@ describe League do
     it "can exist and have details" do
       expect(@league1).to be_a League
       expect(@league1.teams).to be_a TeamsFactory
-      expect(@league1.games).to be_a GamesFactory
       expect(@league1.game_teams).to be_a GameTeamsFactory
     end
   end
@@ -54,6 +53,15 @@ describe League do
   describe "#lowest_scoring_home_team" do
     it "can return the team with the lowest average goals per game while home across all seasons" do
       expect(@league1.lowest_scoring_home_team).to eq("Washington Spirit FC")
+    end
+  end
+
+  describe "#find_team_ids" do
+    it "can return an array of team ids" do
+      expect(@league1.find_team_ids).to be_an Array
+      expect(@league1.find_team_ids[0]).to be 1
+      expect(@league1.find_team_ids[5]).to be 3
+      expect(@league1.find_team_ids[20]).to be 2
     end
   end
 end

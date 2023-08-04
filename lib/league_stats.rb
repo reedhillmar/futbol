@@ -1,10 +1,8 @@
 #./lib/league.rb
 require "./lib/calculable"
 require_relative 'game_teams_factory'
-require_relative 'games_factory'
 require_relative 'teams_factory'
 require_relative 'game_teams'
-require_relative 'games'
 require_relative "teams"
 
 class League
@@ -15,8 +13,6 @@ class League
   def initialize(teams_database, games_database, game_teams_database)
     @teams = TeamsFactory.new
     @teams.create_teams(teams_database)
-    @games = GamesFactory.new
-    @games.create_games(games_database)
     @game_teams = GameTeamsFactory.new
     @game_teams.create_game_teams(game_teams_database)
   end
