@@ -44,9 +44,9 @@ describe GameStats do
     end
   end  
   
-    describe '#average_goals_per_game' do 
-      it 'returns the average number of goals per game' do 
-        expect(@game1.average_goals_per_game).to eq(3.84)
+  describe '#average_goals_per_game' do 
+    it 'returns the average number of goals per game' do 
+      expect(@game1.average_goals_per_game).to eq(3.84)
     end
   end
 
