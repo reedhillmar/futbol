@@ -10,21 +10,19 @@ class Season
   include Calculable
 attr_reader :year, :teams, :games, :game_teams, :searched_season
   def initialize(year,teams_database, games_database, game_teams_database)
-    @year = year
     @teams = TeamsFactory.new
     @teams.create_teams(teams_database)
     @games = GamesFactory.new
     @games.create_games(games_database)
     @game_teams = GameTeamsFactory.new
     @game_teams.create_game_teams(game_teams_database)
-    @searched_season = []
-    within_searched_season
-    
   end
 
-  def within_searched_season
+  def within_searched_season(year)
+    @searched_season = []
+    formatted_year = year.to_i
     @games.games.select do |game| 
-      if game.season == @year
+      if game.season == formatted_year
       @searched_season << game
       end
     end
@@ -82,8 +80,9 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
   end
 
 
-  def winningest_coach
-    
+  def winningest_coach(year)
+
+    within_searched_season(year) 
     method_setup
     accumulating_game_results
 
@@ -96,8 +95,9 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     end.head_coach
   end
 
-  def worst_coach
-    
+  def worst_coach(year)
+
+    within_searched_season(year)
     method_setup
     accumulating_game_results
     
@@ -111,8 +111,9 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
   end
 
   #Best ratio of shots to goals
-  def most_accurate_team
-    
+  def most_accurate_team(year)
+
+    within_searched_season(year)
     method_setup
     calculate_team_shot_accuracy
 
@@ -127,8 +128,9 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
 
   end
 
-  def least_accurate_team
+  def least_accurate_team(year)
 
+    within_searched_season(year)
     method_setup
     calculate_team_shot_accuracy
 
@@ -141,14 +143,15 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     end.team_name
   end
 
-  def most_tackles
+  def most_tackles(year)
+   
+    within_searched_season(year)
+    method_setup
+    accumulating_tackles
   
-  method_setup
-  accumulating_tackles
-  
-  @most_tackles_team = @team_tackles.max_by do |team_id, tackles|
+    @most_tackles_team = @team_tackles.max_by do |team_id, tackles|
     tackles
-  end
+    end
 
   @most_tackles_team_name = @teams.teams.find do |team|
     team.team_id == @most_tackles_team[0]
@@ -157,8 +160,8 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
   #Later print a message that mentions goals
   end
 
-  def fewest_tackles
-  
+  def fewest_tackles(year)
+    within_searched_season(year)
   method_setup
   accumulating_tackles
   
