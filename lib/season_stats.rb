@@ -9,7 +9,7 @@ require_relative 'calculable'
 class Season
   include Calculable
 attr_reader :year, :teams, :games, :game_teams, :searched_season
-  def initialize(year,teams_database, games_database, game_teams_database)
+  def initialize(teams_database, games_database, game_teams_database)
     @teams = TeamsFactory.new
     @teams.create_teams(teams_database)
     @games = GamesFactory.new

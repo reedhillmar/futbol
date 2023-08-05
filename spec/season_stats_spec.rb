@@ -7,8 +7,8 @@ require './lib/calculable'
 
 RSpec.describe Season do
   before(:each) do
-    @season = Season.new(20122013, './data/teams.csv', './fixture/games_fixtures.csv', './fixture/game_teams_fixtures.csv')
-    @alt_season = Season.new(20162017, './data/teams.csv', './fixture/games_fixtures.csv', './fixture/game_teams_fixtures.csv')
+    @season = Season.new('./data/teams.csv', './fixture/games_fixtures.csv', './fixture/game_teams_fixtures.csv')
+    @alt_season = Season.new('./data/teams.csv', './fixture/games_fixtures.csv', './fixture/game_teams_fixtures.csv')
     # @real_season = Season.new(20122013, './data/teams.csv', './data/games.csv', './data/game_teams.csv')
   end
 
@@ -20,99 +20,101 @@ RSpec.describe Season do
 
   describe '#within_searched_season' do
     it "can return games within a season" do
-      expect(@season.within_searched_season).not_to eq nil
+      expect(@season.within_searched_season('20122013')).not_to eq nil
     end
   end
 
   describe '#most_tackles' do
     it "can return which team has the most tackles in a season" do
-      expect(@season.most_tackles).to eq('Houston Dynamo')
+      expect(@season.most_tackles('20122013')).to eq('Houston Dynamo')
     end
 
     it "can work for different seasons" do
-      expect(@alt_season.most_tackles).to eq('Vancouver Whitecaps FC')
+      expect(@alt_season.most_tackles('20162017')).to eq('Vancouver Whitecaps FC')
     end
 
     xit "can work for a  larger database" do
-      expect(@real_season.most_tackles).to eq('FC Cincinnati')
+      expect(@real_season.most_tackles('20122013')).to eq('FC Cincinnati')
     end
   end
 
   describe '#fewest_tackles' do
     it "can return which team has the fewest tackles in a seasom" do
-      expect(@season.fewest_tackles).to eq('Houston Dynamo')
+      expect(@season.fewest_tackles('20122013')).to eq('Houston Dynamo')
     end
 
     it "can work for different seasons" do
-      expect(@alt_season.fewest_tackles).to eq('Chicago Red Stars')
+      expect(@alt_season.fewest_tackles('20162017')).to eq('Chicago Red Stars')
     end
 
     xit "can work for a larger database" do
-      expect(@real_season.fewest_tackles).to eq('Atlanta United')
+      expect(@real_season.fewest_tackles('20122013')).to eq('Atlanta United')
     end
   end
 
   describe '#least_accurate_team' do
     it "can return which team had the lowest shot to goal percentage in a season" do
-      expect(@season.least_accurate_team).to eq('Houston Dynamo')
+      expect(@season.least_accurate_team('20122013')).to eq('Houston Dynamo')
     end
 
     it "can work for different seasons" do
-      expect(@alt_season.least_accurate_team).to eq('Vancouver Whitecaps FC')
+      expect(@alt_season.least_accurate_team('20162017')).to eq('Vancouver Whitecaps FC')
     end
 
     xit "can work for a larger database" do
-      expect(@real_season.least_accurate_team).to eq('New York City FC')
+      expect(@real_season.least_accurate_team('20122013')).to eq('New York City FC')
     end
   end
 
   describe '#most_accurate_team' do
     it "can return which team had the highest shot to goal percentage in a season" do
-      expect(@season.most_accurate_team).to eq('Houston Dynamo')
+      expect(@season.most_accurate_team('20122013')).to eq('Houston Dynamo')
     end
     it "can work for different seasons" do
-      expect(@alt_season.most_accurate_team).to eq('Chicago Red Stars')
+      expect(@alt_season.most_accurate_team('20162017')).to eq('Chicago Red Stars')
     end
 
     xit "can work for a larger database" do
-      expect(@real_season.most_accurate_team).to eq('DC United')
+      expect(@real_season.most_accurate_team('20122013')).to eq('DC United')
     end
   end
 
   describe '#worst_coach' do
     it "can return the coach with the worst win loss percentage" do
-    expect(@season.worst_coach).to eq('John Tortorella')
+    expect(@season.worst_coach('20122013')).to eq('John Tortorella')
     end
     it "can work for different seasons" do
-      expect(@alt_season.worst_coach).to eq('Joe Sacco')
+      expect(@alt_season.worst_coach('20162017')).to eq('Joe Sacco')
     end
 
     xit "can work for a larger database" do
-      expect(@real_season.worst_coach).to eq('Gerard Gallant')
+      expect(@real_season.worst_coach('20122013')).to eq('Gerard Gallant')
     end
   end
 
   describe '#winningest_coach' do
     it "can return the coach with the best win loss percentage" do
-      expect(@season.winningest_coach).to eq('John Tortorella')
+      expect(@season.winningest_coach('20122013')).to eq('John Tortorella')
     end
     it "can work for different seasons" do
-      expect(@alt_season.winningest_coach).to eq('Ken Hitchcock')
+      expect(@alt_season.winningest_coach('20162017')).to eq('Ken Hitchcock')
     end
 
     xit "can work for a larger database" do
-      expect(@real_season.winningest_coach).to eq('Claude Julien')
+      expect(@real_season.winningest_coach('20122013')).to eq('Claude Julien')
     end
   end
 
   describe '#method_setup' do
     it 'can be used to setup the functionality of other methods' do
+      @season.within_searched_season('20122013')
       expect(@season.method_setup).not_to eq(nil)
     end
   end
 
   describe '#accumulating_game_results' do
     it 'can return the results of the results of team' do
+      @season.within_searched_season('20122013')
       @season.method_setup
       expect(@season.accumulating_game_results).not_to eq(nil)
     end
@@ -120,6 +122,7 @@ RSpec.describe Season do
 
   describe '#calculate_team_shot_accuracy' do
     it 'can return the team accuracy of a team within a season' do
+      @season.within_searched_season('20122013')
       @season.method_setup
       expect(@season.calculate_team_shot_accuracy).not_to eq(nil)
   end
@@ -128,6 +131,7 @@ end
 
   describe '#accumulating_tackles' do
     it 'can return the overall tackles of a team within a season' do
+      @season.within_searched_season('20122013')
       @season.method_setup
       expect(@season.accumulating_tackles).not_to eq(nil)
     end
