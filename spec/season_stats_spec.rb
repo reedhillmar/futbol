@@ -121,7 +121,7 @@ RSpec.describe Season do
   describe '#calculate_team_shot_accuracy' do
   it 'can return the results of the results of team' do
     @season.method_setup
-    expect(@season.accumulating_game_results).not_to eq(nil)
+    expect(@season.calculate_team_shot_accuracy).not_to eq(nil)
   end
 end
   
