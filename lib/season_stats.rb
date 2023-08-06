@@ -79,17 +79,20 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     end
   end
 
+  def top_performer(new_variable)
+    new_variable.max_by do |key, value|
+      value
+    end
+  end
+
 
   def winningest_coach(year)
 
     within_searched_season(year) 
     method_setup
     accumulating_game_results
+    @best_team = top_performer(@team_win_percentages)
 
-    @best_team = @team_win_percentages.max_by do |team_id, percentage|
-      percentage
-    end
-  
     @best_team_team_name = @game_teams.game_teams.find do |team|
       team.team_id == @best_team[0]
     end.head_coach
@@ -116,11 +119,7 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     within_searched_season(year)
     method_setup
     calculate_team_shot_accuracy
-
-    
-    @best_accuracy = @shot_accuracy.max_by do |team_id, percentage|
-      percentage
-    end
+    @best_accuracy = top_performer(@shot_accuracy)
   
     @best_accuracy_team_name = @teams.teams.find do |team|
       team.team_id == @best_accuracy[0]
@@ -148,10 +147,8 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     within_searched_season(year)
     method_setup
     accumulating_tackles
+    @most_tackles_team = top_performer(@team_tackles)
   
-    @most_tackles_team = @team_tackles.max_by do |team_id, tackles|
-    tackles
-    end
 
   @most_tackles_team_name = @teams.teams.find do |team|
     team.team_id == @most_tackles_team[0]
@@ -174,4 +171,3 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
   end.team_name
   end
 end
-
