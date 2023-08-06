@@ -23,13 +23,14 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     formatted_year = year.to_i
     @games.games.select do |game| 
       if game.season == formatted_year
-      @searched_season << game
+        @searched_season << game
       end
     end
   end
 
   def method_setup
     @find_game_ids = []
+    
     @searched_season.each do |game|
       @find_game_ids << game.game_id
     end
