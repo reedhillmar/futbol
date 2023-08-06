@@ -9,29 +9,28 @@ require_relative 'calculable'
 class Season
   include Calculable
 attr_reader :year, :teams, :games, :game_teams, :searched_season
-  def initialize(year,teams_database, games_database, game_teams_database)
-    @year = year
+  def initialize(teams_database, games_database, game_teams_database)
     @teams = TeamsFactory.new
     @teams.create_teams(teams_database)
     @games = GamesFactory.new
     @games.create_games(games_database)
     @game_teams = GameTeamsFactory.new
     @game_teams.create_game_teams(game_teams_database)
-    @searched_season = []
-    within_searched_season
-    
   end
 
-  def within_searched_season
+  def within_searched_season(year)
+    @searched_season = []
+    formatted_year = year.to_i
     @games.games.select do |game| 
-      if game.season == @year
-      @searched_season << game
+      if game.season == formatted_year
+        @searched_season << game
       end
     end
   end
 
   def method_setup
     @find_game_ids = []
+    
     @searched_season.each do |game|
       @find_game_ids << game.game_id
     end
@@ -81,94 +80,75 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     end
   end
 
-
-  def winningest_coach
-    
-    method_setup
-    accumulating_game_results
-
-    @best_team = @team_win_percentages.max_by do |team_id, percentage|
-      percentage
+  def top_performer(previous_variable)
+    previous_variable.max_by do |key, value|
+      value
     end
-  
-    @best_team_team_name = @game_teams.game_teams.find do |team|
-      team.team_id == @best_team[0]
+  end
+
+  def worst_performer(previous_variable)
+    previous_variable.min_by do |key, value|
+      value
+    end
+  end
+
+  def find_coach_name(team_id_hash)
+    @game_teams.game_teams.find do |team|
+      team.team_id == team_id_hash[0]
     end.head_coach
   end
 
-  def worst_coach
-    
+  def find_team_name(team_id_hash)
+    @teams.teams.find do |team|
+      team.team_id == team_id_hash[0]
+    end.team_name
+  end
+
+  def winningest_coach(year)
+    within_searched_season(year) 
     method_setup
     accumulating_game_results
-    
-    @worst_team = @team_win_percentages.min_by do |team_id, percentage|
-      percentage
-    end
-  
-    @worst_team_team_name = @game_teams.game_teams.find do |team|
-      team.team_id == @worst_team[0]
-    end.head_coach
+    @best_team = top_performer(@team_win_percentages)
+    find_coach_name(@best_team)
   end
 
-  #Best ratio of shots to goals
-  def most_accurate_team
-    
+  def worst_coach(year)
+    within_searched_season(year)
+    method_setup
+    accumulating_game_results
+    @worst_team = worst_performer(@team_win_percentages)
+    find_coach_name(@worst_team)
+  end
+
+  def most_accurate_team(year)
+    within_searched_season(year)
     method_setup
     calculate_team_shot_accuracy
-
-    
-    @best_accuracy = @shot_accuracy.max_by do |team_id, percentage|
-      percentage
-    end
-  
-    @best_accuracy_team_name = @teams.teams.find do |team|
-      team.team_id == @best_accuracy[0]
-    end.team_name
-
+    @best_accuracy = top_performer(@shot_accuracy)
+    find_team_name(@best_accuracy)
   end
 
-  def least_accurate_team
-
+  def least_accurate_team(year)
+    within_searched_season(year)
     method_setup
     calculate_team_shot_accuracy
-
-    @worst_accuracy = @shot_accuracy.min_by do |team_id, percentage|
-      percentage
-    end
-  
-    @worst_accuracy_team_name = @teams.teams.find do |team|
-      team.team_id == @worst_accuracy[0]
-    end.team_name
+    @worst_accuracy = worst_performer(@shot_accuracy)
+    find_team_name(@worst_accuracy)
   end
 
-  def most_tackles
-  
-  method_setup
-  accumulating_tackles
-  
-  @most_tackles_team = @team_tackles.max_by do |team_id, tackles|
-    tackles
+  def most_tackles(year)
+    within_searched_season(year)
+    method_setup
+    accumulating_tackles
+    @most_tackles_team = top_performer(@team_tackles)
+    find_team_name(@most_tackles_team)
   end
 
-  @most_tackles_team_name = @teams.teams.find do |team|
-    team.team_id == @most_tackles_team[0]
-  end.team_name
-
-  #Later print a message that mentions goals
-  end
-
-  def fewest_tackles
-  
-  method_setup
-  accumulating_tackles
-  
-  @least_tackles_team = @team_tackles.min_by do |team_id, tackles|
-    tackles
-  end
-
-  @least_tackles_team_name = @teams.teams.find do |team|
-    team.team_id == @least_tackles_team[0]
-  end.team_name
+  def fewest_tackles(year)
+    within_searched_season(year)
+    method_setup
+    accumulating_tackles
+    @least_tackles_team = worst_performer(@team_tackles)
+    find_team_name(@least_tackles_team)
   end
 end
-
