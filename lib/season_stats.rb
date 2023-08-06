@@ -79,12 +79,23 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     end
   end
 
-  def top_performer(new_variable)
-    new_variable.max_by do |key, value|
+  def top_performer(previous_variable)
+    previous_variable.max_by do |key, value|
       value
     end
   end
 
+  def worst_performer(previous_variable)
+    previous_variable.min_by do |key, value|
+      value
+    end
+  end
+
+  def find_team_name(team_id_hash)
+    @game_teams.game_teams.find do |team|
+      team.team_id == @best_team[0]
+    end
+  end
 
   def winningest_coach(year)
 
@@ -93,8 +104,7 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     accumulating_game_results
     @best_team = top_performer(@team_win_percentages)
 
-    @best_team_team_name = @game_teams.game_teams.find do |team|
-      team.team_id == @best_team[0]
+    @best_team_team_name = find_team_name(@best_team)
     end.head_coach
   end
 
@@ -103,10 +113,7 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     within_searched_season(year)
     method_setup
     accumulating_game_results
-    
-    @worst_team = @team_win_percentages.min_by do |team_id, percentage|
-      percentage
-    end
+    @worst_team = worst_performer(@team_win_percentages)
   
     @worst_team_team_name = @game_teams.game_teams.find do |team|
       team.team_id == @worst_team[0]
@@ -132,10 +139,7 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     within_searched_season(year)
     method_setup
     calculate_team_shot_accuracy
-
-    @worst_accuracy = @shot_accuracy.min_by do |team_id, percentage|
-      percentage
-    end
+    @worst_accuracy = worst_performer(@shot_accuracy)
   
     @worst_accuracy_team_name = @teams.teams.find do |team|
       team.team_id == @worst_accuracy[0]
@@ -161,10 +165,7 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     within_searched_season(year)
   method_setup
   accumulating_tackles
-  
-  @least_tackles_team = @team_tackles.min_by do |team_id, tackles|
-    tackles
-  end
+  @least_tackles_team = worst_performer(@team_tackles)
 
   @least_tackles_team_name = @teams.teams.find do |team|
     team.team_id == @least_tackles_team[0]
