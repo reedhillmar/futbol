@@ -2,11 +2,22 @@
 require_relative 'game_stats'
 require_relative 'league_stats'
 require_relative 'season_stats'
+require_relative 'game_teams_factory'
+require_relative 'games_factory'
+require_relative 'teams_factory'
+require_relative 'game_teams'
+require_relative 'games'
+require_relative 'teams'
 
 class StatTracker
-  def initialize
+  def initialize(teams_database = "./data/teams.csv", games_database = "./data/games.csv", game_teams_database = "./data/game_teams.csv")
+    @teams = TeamsFactory.new
+    @teams.create_teams(teams_database)
+    @games = GamesFactory.new
+    @games.create_games(games_database)
+    @game_teams = GameTeamsFactory.new
+    @game_teams.create_game_teams(game_teams_database)
   end
-
   #We may need to initialize objects from the game, season, and league classes here
   # ie game_stats = Game.new(insert arguments here)
   # league_stats = League.new(arguments)
