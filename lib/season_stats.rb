@@ -1,5 +1,5 @@
 require 'csv'
-require 'spec_helper'
+# require 'spec_helper'
 require_relative 'game_teams_factory'
 require_relative 'games_factory'
 require_relative 'teams_factory'

@@ -1,7 +1,7 @@
 #./lib/game.rb
 require 'csv'
-require 'spec_helper'
-require './lib/calculable'
+# require 'spec_helper'
+require_relative 'calculable'
 require_relative 'game_teams_factory'
 require_relative 'games_factory'
 require_relative 'teams_factory'
