@@ -152,4 +152,14 @@ end
       expect(bottom_coach[0]).to be_a String
     end
   end
+
+    describe '#find_team_name' do
+      it 'can find the team name associated with a team id' do
+        @season.within_searched_season('20122013')
+        @season.method_setup
+        @season.accumulating_tackles
+        bottom_team = @season.worst_performer(@season.instance_variable_get(:@team_tackles))
+        expect(@season.find_team_name(bottom_team)).to be_a String
+      end
+    end
 end
