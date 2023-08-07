@@ -46,7 +46,7 @@ class GameStats
         home_wins += 1
       end
     end
-      percentage_wins = (home_wins.to_f / @games.games.count.to_f) * 100
+      percentage_wins = (home_wins.to_f / @games.games.count.to_f)
       percentage_wins.round(2)
   end
 
@@ -57,7 +57,7 @@ class GameStats
         visit_wins += 1
       end
     end
-      percentage_wins = (visit_wins.to_f / @games.games.count.to_f) * 100
+      percentage_wins = (visit_wins.to_f / @games.games.count.to_f) 
       percentage_wins.round(2)
   end
 

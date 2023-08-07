@@ -28,13 +28,13 @@ describe GameStats do
 
   describe '#percentage_home_wins' do 
     it 'returns the percentage of home wins' do 
-      expect(@game1.percentage_home_wins).to eq(45.45)
+      expect(@game1.percentage_home_wins).to eq(0.45)
     end
   end
 
   describe '#percentage_visitor_wins' do 
     it 'returns the percentage of visitor wins' do 
-      expect(@game1.percentage_visitor_wins).to eq(36.36)
+      expect(@game1.percentage_visitor_wins).to eq(0.36)
     end
   end
 
