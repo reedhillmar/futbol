@@ -2,7 +2,6 @@ require "spec_helper"
 
 RSpec.describe StatTracker do
   before(:each) do
-    # @stat_tracker = StatTracker.new
 
     game_path = './data/games.csv'
     team_path = './data/teams.csv'

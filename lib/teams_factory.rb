@@ -1,4 +1,3 @@
-#./lib/teams_factory.rb
 require "csv"
 
 class TeamsFactory

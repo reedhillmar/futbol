@@ -1,4 +1,3 @@
-#./lib/games_teams_factory.rb
 require "csv"
 
 class GameTeamsFactory

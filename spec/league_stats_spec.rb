@@ -70,7 +70,6 @@ describe League do
 
   describe "#average_goals" do
     it "can return a hash with average goals by team id" do
-      # require 'pry';binding.pry
       expect(@league1.average_goals("total")).to be_a Hash 
       expect(@league1.average_goals("total")[8]).to be 3.0
 

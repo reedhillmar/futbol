@@ -1,4 +1,3 @@
-#./lib/league.rb
 require_relative "calculable"
 require_relative 'game_teams_factory'
 require_relative 'teams_factory'

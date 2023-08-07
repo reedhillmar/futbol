@@ -1,4 +1,3 @@
-#./lib/games_factory.rb
 require 'csv'
 require_relative 'games'
 

@@ -1,5 +1,4 @@
-require './lib/season_stats'
-
+require 'spec_helper'
 
 RSpec.describe Season do
   before(:each) do
@@ -76,7 +75,7 @@ RSpec.describe Season do
 
   describe '#worst_coach' do
     it "can return the coach with the worst win loss percentage" do
-    expect(@season.worst_coach('20122013')).to eq('John Tortorella')
+      expect(@season.worst_coach('20122013')).to eq('John Tortorella')
     end
 
     it "can work for different seasons" do
@@ -124,7 +123,6 @@ RSpec.describe Season do
       expect(@season.calculate_team_shot_accuracy).not_to eq(nil)
   end
 end
-
 
   describe '#accumulating_tackles' do
     it 'can return the overall tackles of a team within a season' do
