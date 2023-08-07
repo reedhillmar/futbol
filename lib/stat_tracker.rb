@@ -91,7 +91,7 @@ class StatTracker
   end
 
   def lowest_scoring_home_team
-    league_stats.lowest_scoring_visitor
+    league_stats.lowest_scoring_home_team
   end
 
   def winningest_coach(season)
