@@ -8,7 +8,7 @@ require_relative 'calculable'
 
 class Season
   include Calculable
-attr_reader :year, :teams, :games, :game_teams, :searched_season
+  attr_reader :teams, :games, :game_teams
   def initialize(teams_database, games_database, game_teams_database)
     @teams = TeamsFactory.new
     @teams.create_teams(teams_database)
@@ -43,15 +43,15 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     @game_results = Hash.new {|hash, key| hash[key] = []}
     
     @all_games.each do |game|
-      @game_results[game.team_id] << game.result
+      @game_results[game.head_coach] << game.result
     end
 
-    @team_win_percentages = Hash.new(0)
+    @coach_win_percentages = Hash.new(0)
 
     @game_results.each do |team_id, game|
       wins = game.count("WIN")
       total_games = game.count
-      @team_win_percentages[team_id] = percentage(wins, total_games)
+      @coach_win_percentages[team_id] = percentage(wins, total_games)
     end
   end
 
@@ -92,12 +92,6 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     end
   end
 
-  def find_coach_name(team_id_hash)
-    @game_teams.game_teams.find do |team|
-      team.team_id == team_id_hash[0]
-    end.head_coach
-  end
-
   def find_team_name(team_id_hash)
     @teams.teams.find do |team|
       team.team_id == team_id_hash[0]
@@ -108,16 +102,16 @@ attr_reader :year, :teams, :games, :game_teams, :searched_season
     within_searched_season(year) 
     method_setup
     accumulating_game_results
-    @best_team = top_performer(@team_win_percentages)
-    find_coach_name(@best_team)
+    @best_coach = top_performer(@coach_win_percentages)
+    @best_coach[0]
   end
 
   def worst_coach(year)
     within_searched_season(year)
     method_setup
     accumulating_game_results
-    @worst_team = worst_performer(@team_win_percentages)
-    find_coach_name(@worst_team)
+    @worst_coach = worst_performer(@coach_win_percentages)
+    @worst_coach[0]
   end
 
   def most_accurate_team(year)
