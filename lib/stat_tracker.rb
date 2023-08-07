@@ -10,18 +10,35 @@ require_relative 'games'
 require_relative 'teams'
 
 class StatTracker
+  attr_reader :game_stats, :league_stats, :season_stats
   def initialize(teams_database = "./data/teams.csv", games_database = "./data/games.csv", game_teams_database = "./data/game_teams.csv")
     @teams = TeamsFactory.new
     @teams.create_teams(teams_database)
     @games = GamesFactory.new
     @games.create_games(games_database)
     @game_teams = GameTeamsFactory.new
-    @game_teams.create_game_teams(game_teams_database)
+    @game_teams.create_game_teams(game_teams_database)(locations)
+    @game_stats = GameStats.new(locations[:teams], locations[:games], locations[:game_teams])
+    @league_stats = League.new(locations[:teams], locations[:games], locations[:game_teams])
+    @season_stats = Season.new(locations[:teams], locations[:games], locations[:game_teams])
   end
+
   #We may need to initialize objects from the game, season, and league classes here
   # ie game_stats = Game.new(insert arguments here)
   # league_stats = League.new(arguments)
   # season_stats = Season.new(arguments)
+
+  def self.from_csv(locations)
+    StatTracker.new(locations)
+  end
+
+  def self.from_csv(locations)
+    StatTracker.new(locations)
+  end
+
+  def self.from_csv(locations)
+    StatTracker.new(locations)
+  end
 
   def highest_total_score
     game_stats.highest_total_score
@@ -83,28 +100,28 @@ class StatTracker
     league_stats.lowest_scoring_visitor
   end
 
-  def winningest_coach
-    season_stats.winningest_coach
+  def winningest_coach(season)
+    season_stats.winningest_coach(season)
   end
 
-  def worst_coach
-    season_stats.worst_coach
+  def worst_coach(season)
+    season_stats.worst_coach(season)
   end
 
-  def most_accurate_team
-    season_stats.most_accurate_team
+  def most_accurate_team(season)
+    season_stats.most_accurate_team(season)
   end
 
-  def least_accurate_team
-    season_stats.least_accurate_team
+  def least_accurate_team(season)
+    season_stats.least_accurate_team(season)
   end
 
-  def most_tackles
-    season_stats.most_tackles
+  def most_tackles(season)
+    season_stats.most_tackles(season)
   end
 
-  def fewest_tackles
-    season_stats.fewest_tackles
+  def fewest_tackles(season)
+    season_stats.fewest_tackles(season)
   end
 
 end
