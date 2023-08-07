@@ -1,15 +1,19 @@
-require_relative 'game_stats'
-require_relative 'league_stats'
-require_relative 'season_stats'
-require_relative 'game_teams_factory'
-require_relative 'games_factory'
-require_relative 'teams_factory'
-require_relative 'game_teams'
-require_relative 'games'
-require_relative 'teams'
+require 'csv'
+require_relative "calculable"
+require_relative "game_stats"
+require_relative "game_teams_factory"
+require_relative "game_teams"
+require_relative "games_factory"
+require_relative "games"
+require_relative "league_stats"
+require_relative "season_stats"
+require_relative "stat_tracker"
+require_relative "teams_factory"
+require_relative "teams"
 
 class StatTracker
   attr_reader :game_stats, :league_stats, :season_stats
+  
   def initialize(locations)
     @game_stats = GameStats.new(locations[:teams], locations[:games], locations[:game_teams])
     @league_stats = League.new(locations[:teams], locations[:games], locations[:game_teams])
@@ -18,6 +22,15 @@ class StatTracker
 
   def self.from_csv(locations)
     StatTracker.new(locations)
+  end
+
+  def class_setup(teams_database, games_database, game_teams_database)
+    @teams = TeamsFactory.new
+    @teams.create_teams(teams_database)
+    @games = GamesFactory.new
+    @games.create_games(games_database)
+    @game_teams = GameTeamsFactory.new
+    @game_teams.create_game_teams(game_teams_database)
   end
 
   def highest_total_score

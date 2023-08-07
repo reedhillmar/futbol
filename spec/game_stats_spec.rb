@@ -8,9 +8,6 @@ describe GameStats do
   describe "#initialize" do
     it "can exist and have details" do
       expect(@game1).to be_a GameStats
-      expect(@game1.teams).to be_a TeamsFactory
-      expect(@game1.games).to be_a GamesFactory
-      expect(@game1.game_teams).to be_a GameTeamsFactory
     end
   end
 

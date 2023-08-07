@@ -1,20 +1,23 @@
 require 'csv'
-require_relative 'game_teams_factory'
-require_relative 'games_factory'
-require_relative 'teams_factory'
-require_relative 'games'
-require_relative 'calculable'
+require_relative "calculable"
+require_relative "game_stats"
+require_relative "game_teams_factory"
+require_relative "game_teams"
+require_relative "games_factory"
+require_relative "games"
+require_relative "league_stats"
+require_relative "season_stats"
+require_relative "stat_tracker"
+require_relative "teams_factory"
+require_relative "teams"
 
-class Season
+class Season < StatTracker
   include Calculable
+
   attr_reader :teams, :games, :game_teams
+  
   def initialize(teams_database, games_database, game_teams_database)
-    @teams = TeamsFactory.new
-    @teams.create_teams(teams_database)
-    @games = GamesFactory.new
-    @games.create_games(games_database)
-    @game_teams = GameTeamsFactory.new
-    @game_teams.create_game_teams(game_teams_database)
+    class_setup(teams_database, games_database, game_teams_database)
   end
 
   def within_searched_season(year)
