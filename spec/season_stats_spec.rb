@@ -125,7 +125,6 @@ RSpec.describe Season do
   end
 end
 
-
   describe '#accumulating_tackles' do
     it 'can return the overall tackles of a team within a season' do
       @season.within_searched_season('20122013')
@@ -133,4 +132,34 @@ end
       expect(@season.accumulating_tackles).not_to eq(nil)
     end
   end
+
+  describe '#top_performer' do
+    it 'can find the coach/team with the highest particular stat' do
+      @season.within_searched_season('20122013')
+      @season.method_setup
+      @season.accumulating_game_results
+      top_coach = @season.top_performer(@season.instance_variable_get(:@coach_win_percentages))
+      expect(top_coach[0]).to be_a String
+    end
+  end
+
+  describe '#worst_performer' do
+    it 'can find the coach/team with the highest particular stat' do
+      @season.within_searched_season('20122013')
+      @season.method_setup
+      @season.accumulating_game_results
+      bottom_coach = @season.worst_performer(@season.instance_variable_get(:@coach_win_percentages))
+      expect(bottom_coach[0]).to be_a String
+    end
+  end
+
+    describe '#find_team_name' do
+      it 'can find the team name associated with a team id' do
+        @season.within_searched_season('20122013')
+        @season.method_setup
+        @season.accumulating_tackles
+        bottom_team = @season.worst_performer(@season.instance_variable_get(:@team_tackles))
+        expect(@season.find_team_name(bottom_team)).to be_a String
+      end
+    end
 end
