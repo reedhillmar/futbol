@@ -11,13 +11,7 @@ require_relative 'teams'
 
 class StatTracker
   attr_reader :game_stats, :league_stats, :season_stats
-  def initialize(teams_database = "./data/teams.csv", games_database = "./data/games.csv", game_teams_database = "./data/game_teams.csv")
-    @teams = TeamsFactory.new
-    @teams.create_teams(teams_database)
-    @games = GamesFactory.new
-    @games.create_games(games_database)
-    @game_teams = GameTeamsFactory.new
-    @game_teams.create_game_teams(game_teams_database)(locations)
+  def initialize(locations)
     @game_stats = GameStats.new(locations[:teams], locations[:games], locations[:game_teams])
     @league_stats = League.new(locations[:teams], locations[:games], locations[:game_teams])
     @season_stats = Season.new(locations[:teams], locations[:games], locations[:game_teams])
