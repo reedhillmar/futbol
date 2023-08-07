@@ -142,4 +142,14 @@ end
       expect(top_coach[0]).to be_a String
     end
   end
+
+  describe '#worst_performer' do
+    it 'can find the coach/team with the highest particular stat' do
+      @season.within_searched_season('20122013')
+      @season.method_setup
+      @season.accumulating_game_results
+      bottom_coach = @season.worst_performer(@season.instance_variable_get(:@coach_win_percentages))
+      expect(bottom_coach[0]).to be_a String
+    end
+  end
 end
