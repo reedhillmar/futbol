@@ -10,11 +10,11 @@ class StatTracker
     @league_stats = League.new(locations[:teams], locations[:games], locations[:game_teams])
     @season_stats = Season.new(locations[:teams], locations[:games], locations[:game_teams])
   end
-
-  #We may need to initialize objects from the game, season, and league classes here
-  # ie game_stats = Game.new(insert arguments here)
-  # league_stats = League.new(arguments)
-  # season_stats = Season.new(arguments)
+  
+    #We may need to initialize objects from the game, season, and league classes here
+    # ie game_stats = Game.new(insert arguments here)
+    # league_stats = League.new(arguments)
+    # season_stats = Season.new(arguments)
 
   def self.from_csv(locations)
     StatTracker.new(locations)

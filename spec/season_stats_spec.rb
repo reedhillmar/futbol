@@ -1,20 +1,15 @@
 require './lib/season_stats'
-require './lib/game_teams_factory'
-require './lib/games_factory'
-require './lib/teams_factory'
-require './lib/calculable'
 
 
 RSpec.describe Season do
   before(:each) do
     @season = Season.new('./data/teams.csv', './fixture/games_fixtures.csv', './fixture/game_teams_fixtures.csv')
-    @alt_season = Season.new('./data/teams.csv', './fixture/games_fixtures.csv', './fixture/game_teams_fixtures.csv')
-    # @real_season = Season.new(20122013, './data/teams.csv', './data/games.csv', './data/game_teams.csv')
+    @real_season = Season.new('./data/teams.csv', './data/games.csv', './data/game_teams.csv')
   end
 
   describe '#initialize' do
     it "can initialize" do
-      expect(@alt_season).to be_a Season
+      expect(@season).to be_a Season
     end
   end
 
@@ -30,10 +25,10 @@ RSpec.describe Season do
     end
 
     it "can work for different seasons" do
-      expect(@alt_season.most_tackles('20162017')).to eq('Vancouver Whitecaps FC')
+      expect(@season.most_tackles('20162017')).to eq('Vancouver Whitecaps FC')
     end
 
-    xit "can work for a  larger database" do
+    it "can work for a  larger database" do
       expect(@real_season.most_tackles('20122013')).to eq('FC Cincinnati')
     end
   end
@@ -44,10 +39,10 @@ RSpec.describe Season do
     end
 
     it "can work for different seasons" do
-      expect(@alt_season.fewest_tackles('20162017')).to eq('Chicago Red Stars')
+      expect(@season.fewest_tackles('20162017')).to eq('Chicago Red Stars')
     end
 
-    xit "can work for a larger database" do
+    it "can work for a larger database" do
       expect(@real_season.fewest_tackles('20122013')).to eq('Atlanta United')
     end
   end
@@ -58,10 +53,10 @@ RSpec.describe Season do
     end
 
     it "can work for different seasons" do
-      expect(@alt_season.least_accurate_team('20162017')).to eq('Vancouver Whitecaps FC')
+      expect(@season.least_accurate_team('20162017')).to eq('Vancouver Whitecaps FC')
     end
 
-    xit "can work for a larger database" do
+    it "can work for a larger database" do
       expect(@real_season.least_accurate_team('20122013')).to eq('New York City FC')
     end
   end
@@ -71,10 +66,10 @@ RSpec.describe Season do
       expect(@season.most_accurate_team('20122013')).to eq('Houston Dynamo')
     end
     it "can work for different seasons" do
-      expect(@alt_season.most_accurate_team('20162017')).to eq('Chicago Red Stars')
+      expect(@season.most_accurate_team('20162017')).to eq('Chicago Red Stars')
     end
 
-    xit "can work for a larger database" do
+    it "can work for a larger database" do
       expect(@real_season.most_accurate_team('20122013')).to eq('DC United')
     end
   end
@@ -83,12 +78,13 @@ RSpec.describe Season do
     it "can return the coach with the worst win loss percentage" do
     expect(@season.worst_coach('20122013')).to eq('John Tortorella')
     end
+
     it "can work for different seasons" do
-      expect(@alt_season.worst_coach('20162017')).to eq('Joe Sacco')
+      expect(@season.worst_coach('20162017')).to eq('Jared Bednar')
     end
 
-    xit "can work for a larger database" do
-      expect(@real_season.worst_coach('20122013')).to eq('Gerard Gallant')
+    it "can work for a larger database" do
+      expect(@real_season.worst_coach('20122013')).to eq('Martin Raymond')
     end
   end
 
@@ -96,12 +92,13 @@ RSpec.describe Season do
     it "can return the coach with the best win loss percentage" do
       expect(@season.winningest_coach('20122013')).to eq('John Tortorella')
     end
+
     it "can work for different seasons" do
-      expect(@alt_season.winningest_coach('20162017')).to eq('Ken Hitchcock')
+      expect(@season.winningest_coach('20162017')).to eq('Lindy Ruff')
     end
 
-    xit "can work for a larger database" do
-      expect(@real_season.winningest_coach('20122013')).to eq('Claude Julien')
+    it "can work for a larger database" do
+      expect(@real_season.winningest_coach('20122013')).to eq('Dan Lacroix')
     end
   end
 
@@ -136,7 +133,4 @@ end
       expect(@season.accumulating_tackles).not_to eq(nil)
     end
   end
-
-
-
 end

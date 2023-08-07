@@ -1,5 +1,5 @@
 require 'csv'
-# require 'spec_helper'
+require 'spec_helper'
 require_relative 'game_teams_factory'
 require_relative 'games_factory'
 require_relative 'teams_factory'
@@ -8,7 +8,7 @@ require_relative 'calculable'
 
 class Season
   include Calculable
-attr_reader :year, :teams, :games, :game_teams, :searched_season
+  attr_reader :teams, :games, :game_teams
   def initialize(teams_database, games_database, game_teams_database)
     @teams = TeamsFactory.new
     @teams.create_teams(teams_database)
