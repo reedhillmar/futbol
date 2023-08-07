@@ -1,7 +1,12 @@
-#./lib/stat_tracker.rb
 require_relative 'game_stats'
 require_relative 'league_stats'
 require_relative 'season_stats'
+require_relative 'game_teams_factory'
+require_relative 'games_factory'
+require_relative 'teams_factory'
+require_relative 'game_teams'
+require_relative 'games'
+require_relative 'teams'
 
 class StatTracker
   attr_reader :game_stats, :league_stats, :season_stats
@@ -10,11 +15,6 @@ class StatTracker
     @league_stats = League.new(locations[:teams], locations[:games], locations[:game_teams])
     @season_stats = Season.new(locations[:teams], locations[:games], locations[:game_teams])
   end
-  
-    #We may need to initialize objects from the game, season, and league classes here
-    # ie game_stats = Game.new(insert arguments here)
-    # league_stats = League.new(arguments)
-    # season_stats = Season.new(arguments)
 
   def self.from_csv(locations)
     StatTracker.new(locations)
@@ -77,7 +77,7 @@ class StatTracker
   end
 
   def lowest_scoring_home_team
-    league_stats.lowest_scoring_visitor
+    league_stats.lowest_scoring_home_team
   end
 
   def winningest_coach(season)
@@ -103,5 +103,4 @@ class StatTracker
   def fewest_tackles(season)
     season_stats.fewest_tackles(season)
   end
-
 end

@@ -1,6 +1,4 @@
-#./lib/game.rb
 require 'csv'
-# require 'spec_helper'
 require_relative 'calculable'
 require_relative 'game_teams_factory'
 require_relative 'games_factory'
@@ -46,7 +44,7 @@ class GameStats
         home_wins += 1
       end
     end
-      percentage_wins = (home_wins.to_f / @games.games.count.to_f) * 100
+      percentage_wins = (home_wins.to_f / @games.games.count.to_f)
       percentage_wins.round(2)
   end
 
@@ -57,7 +55,7 @@ class GameStats
         visit_wins += 1
       end
     end
-      percentage_wins = (visit_wins.to_f / @games.games.count.to_f) * 100
+      percentage_wins = (visit_wins.to_f / @games.games.count.to_f) 
       percentage_wins.round(2)
   end
 
@@ -82,7 +80,7 @@ class GameStats
   def count_of_games_by_season
     games_by_season = Hash.new(0)
     @games.games.each do |game|
-      key = game.season 
+      key = game.season.to_s 
       if game.season != nil 
         games_by_season[key] += 1
       else 
@@ -95,11 +93,11 @@ class GameStats
   def average_goals_by_season
     goals_by_season = Hash.new(0)
     @games.games.each do |game|
-      key = game.season
+      key = game.season.to_s
       goals_by_season[key] = []
     end
     @games.games.each do |game|
-      key = game.season
+      key = game.season.to_s
       all_goals = game.away_goals + game.home_goals
       goals_by_season[key]<< all_goals
     end
