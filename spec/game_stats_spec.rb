@@ -53,8 +53,8 @@ describe GameStats do
   describe '#count_of_games_by_season' do 
     it 'returns a hash of number of games by season' do 
       expected = {
-        20122013=>8, 20132014=>13, 20152016=>8, 
-        20162017=>3, 20172018=>3, 20142015=>9
+        "20122013"=>8, "20132014"=>13, "20152016"=>8, 
+        "20162017"=>3, "20172018"=>3, "20142015"=>9
       }
 
       expect(@game1.count_of_games_by_season).to eq(expected)
@@ -64,8 +64,8 @@ describe GameStats do
   describe '#average_goals_by_season' do 
     it 'returns a hash of average number of goals by season' do 
       expected = {
-        20122013=>4.25, 20132014=>3.92, 20152016=>4.0, 
-        20162017=>3.67, 20172018=>4.33, 20142015=>3.11
+        "20122013"=>4.25, "20132014"=>3.92, "20152016"=>4.0, 
+        "20162017"=>3.67, "20172018"=>4.33, "20142015"=>3.11
       }
       
       expect(@game1.average_goals_by_season).to eq(expected)

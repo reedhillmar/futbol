@@ -82,7 +82,7 @@ class GameStats
   def count_of_games_by_season
     games_by_season = Hash.new(0)
     @games.games.each do |game|
-      key = game.season 
+      key = game.season.to_s 
       if game.season != nil 
         games_by_season[key] += 1
       else 
@@ -95,11 +95,11 @@ class GameStats
   def average_goals_by_season
     goals_by_season = Hash.new(0)
     @games.games.each do |game|
-      key = game.season
+      key = game.season.to_s
       goals_by_season[key] = []
     end
     @games.games.each do |game|
-      key = game.season
+      key = game.season.to_s
       all_goals = game.away_goals + game.home_goals
       goals_by_season[key]<< all_goals
     end
