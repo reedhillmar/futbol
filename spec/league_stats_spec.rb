@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe League do
   before(:each) do
-    @league1 = League.new("./data/teams.csv", "./data/games.csv", "./data/game_teams.csv")
+    @league1 = League.new("./data/teams.csv", "./fixture/games_fixtures.csv", "./fixture/game_teams_fixtures.csv")
   end
 
   describe "#initialize" do
